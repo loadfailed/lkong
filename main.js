@@ -5,18 +5,17 @@ Vue.config.productionTip = false
 
 Vue.prototype.checkLogin = function (backpage, backtype) {
   // backtype,1/redirectTo,2/switchTab
-  let SUID = uni.getStorageSync('SUID')
-  let SRAND = uni.getStorageSync('SRAND')
-  let SNAME = uni.getStorageSync('SNAME')
-  let SFACE = uni.getStorageSync('SFACE')
+  let uid = uni.getStorageSync('uid')
+  let name = uni.getStorageSync('name')
+  let token = uni.getStorageSync('token')
 
-  if (SUID === '' || SRAND === ' ' || SFACE === '') {
+  if (uid === '' || token === ' ') {
     uni.redirectTo({
       url: '../login/login?backpage=' + backpage + '&backtype=' + backtype
     })
     return false
   }
-  return [SUID, SRAND, SNAME, SFACE]
+  return [uid, name, token]
 }
 
 Vue.prototype.apiServer = 'http://localhost:5000/api'

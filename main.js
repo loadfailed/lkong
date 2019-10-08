@@ -9,6 +9,7 @@ Vue.prototype.checkLogin = function (backpage, backtype) {
   let name = uni.getStorageSync('name')
   let token = uni.getStorageSync('token')
 
+  console.log('uid', uid);
   if (uid === '' || token === ' ') {
     uni.redirectTo({
       url: '../login/login?backpage=' + backpage + '&backtype=' + backtype

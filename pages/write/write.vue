@@ -13,7 +13,7 @@ export default {
     }
   },
   onLoad () {
-    loginRes = this.checkLogin('../write/write.vue', 2)
+    loginRes = this.checkLogin('/pages/write/write', 2)
     if (!loginRes) return
   },
   methods: {

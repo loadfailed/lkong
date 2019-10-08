@@ -1073,6 +1073,8 @@ function gz$gwx_2(){
 if( __WXML_GLOBAL__.ops_cached.$gwx_2)return __WXML_GLOBAL__.ops_cached.$gwx_2
 __WXML_GLOBAL__.ops_cached.$gwx_2=[];
 (function(z){var a=11;function Z(ops){z.push(ops)}
+Z([3,'_div'])
+Z([3,'登录'])
 })(__WXML_GLOBAL__.ops_cached.$gwx_2);return __WXML_GLOBAL__.ops_cached.$gwx_2
 }
 function gz$gwx_3(){
@@ -1116,6 +1118,11 @@ d_[x[1]]={}
 var m1=function(e,s,r,gg){
 var z=gz$gwx_2()
 var oH=_n('view')
+var cI=_n('view')
+_rz(z,cI,'class',0,e,s,gg)
+var oJ=_oz(z,1,e,s,gg)
+_(cI,oJ)
+_(oH,cI)
 _(r,oH)
 return r
 }
@@ -1123,20 +1130,20 @@ e_[x[1]]={f:m1,j:[],i:[],ti:[],ic:[]}
 d_[x[2]]={}
 var m2=function(e,s,r,gg){
 var z=gz$gwx_3()
-var oJ=_n('view')
-var lK=_oz(z,0,e,s,gg)
-_(oJ,lK)
-_(r,oJ)
+var aL=_n('view')
+var tM=_oz(z,0,e,s,gg)
+_(aL,tM)
+_(r,aL)
 return r
 }
 e_[x[2]]={f:m2,j:[],i:[],ti:[],ic:[]}
 d_[x[3]]={}
 var m3=function(e,s,r,gg){
 var z=gz$gwx_4()
-var tM=_n('view')
-var eN=_oz(z,0,e,s,gg)
-_(tM,eN)
-_(r,tM)
+var bO=_n('view')
+var oP=_oz(z,0,e,s,gg)
+_(bO,oP)
+_(r,bO)
 return r
 }
 e_[x[3]]={f:m3,j:[],i:[],ti:[],ic:[]}

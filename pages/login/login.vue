@@ -76,20 +76,29 @@ export default {
         action: 'login',
         email: this.email,
         password: this.password,
+        rememberme: 'on'
       }
 
       // 登录请求
       uni.request({
-        url: 'http://lkong.cn/index.php?mod=login',
+        url: `${this.apiServer}/users/login`,
         method: 'POST',
-        header: { 'content-type': 'application/x-www-form-urlencoded' },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
         data,
         success: res => {
-          if (res.data.success) {
-            console.log(res);
-            uni.setStorageSync('name', res.data.name)
-            uni.setStorageSync('uid', res.data.uid)
-            uni.setStorageSync('token', res.data.yousuu)
+          if (res.data.data.success) {
+            console.log(res.data);
+            // 保存本地数据
+            uni.setStorageSync('dzsbhey', res.data.cookies[0].split(';')[0].replace('dzsbhey=', ''))
+            uni.setStorageSync('auth', res.data.cookies[1].split(';')[0].replace('auth=', ''))
+            uni.setStorageSync('name', res.data.data.name)
+            uni.setStorageSync('uid', res.data.data.uid)
+            uni.setStorageSync('yousuu', res.data.data.yousuu)
+
+
+            // 返回来的页面
             if (this.options.backtype === '1') uni.redirectTo({ url: this.options.backpage })
             else uni.switchTab({ url: this.options.backpage })
           } else {
@@ -105,7 +114,6 @@ export default {
           console.log(res);
         }
       })
-
     }
   },
   mounted () {
@@ -113,38 +121,6 @@ export default {
   },
   onLoad (options) {
     this.options = options
-    console.log(this.options);
-    // #ifdef APP-PLUS
-
-    // 微信登录
-    // uni.login({
-    //   success: (res => {
-    //     const info = res
-    //     uni.getUserInfo({
-    //       success: function (info) {
-    //         uni.request({
-    //           url: _this.apiServer + '/users/login',
-    //           method: 'POST',
-    //           header: { 'content-type': 'application/x-www-form-urlencoded' },
-    //           data: info.userInfo,
-    //           success: res => { console.log('请求成功', JSON.stringify(res)) },
-    //           fail: e => { console.log('请求失败', JSON.stringify(res)); },
-    //         })
-
-    //       },
-    //       fail: () => {
-    //         uni.showToast({ title: '登录失败请重试', icon: 'none' })
-    //       }
-    //     })
-    //   }),
-    //   fail: () => {
-    //     uni.showToast({ title: '微信授权登录失败', icon: 'none' })
-    //   }
-    // })
-
-
-
-    // #endif
   }
 }
 </script>

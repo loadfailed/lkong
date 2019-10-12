@@ -12,7 +12,10 @@
       }
     }, {
       "path": "pages/mine/mine",
-      "style": {}
+      "style": {
+        "navigationBarTitleText": "个人中心",
+        "enablePullDownRefresh": true
+      }
     }, {
       "path": "pages/login/login",
       "style": {}

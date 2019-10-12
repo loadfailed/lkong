@@ -1,14 +1,19 @@
 <template>
   <view class="content">
+    <post-list-card />
   </view>
 </template>
 
 <script>
+import PostListCard from '../../components/postListCard';
 export default {
   data () {
     return {
       title: 'Hello'
     }
+  },
+  components: {
+    PostListCard
   },
   onLoad () {
 

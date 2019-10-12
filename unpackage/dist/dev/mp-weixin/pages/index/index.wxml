@@ -1,1 +1,1 @@
-<view class="content data-v-5e5ba790"></view>
+<view class="content data-v-5e5ba790"><post-list-card vue-id="1" class="data-v-5e5ba790" bind:__l="__l"></post-list-card></view>

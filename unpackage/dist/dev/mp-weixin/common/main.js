@@ -13,23 +13,52 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 9));function 
 
 _vue.default.config.productionTip = false;
 
+// 检查用户有没有登录
 _vue.default.prototype.checkLogin = function (backpage, backtype) {
   // backtype,1/redirectTo,2/switchTab
   var uid = uni.getStorageSync('uid');
   var name = uni.getStorageSync('name');
-  var token = uni.getStorageSync('token');
+  var dzsbhey = uni.getStorageSync('dzsbhey');
+  var auth = uni.getStorageSync('auth');
 
-  console.log('uid', uid);
-  if (uid === '' || token === ' ') {
+  if (uid === '' || auth === ' ') {
     uni.redirectTo({
       url: '../login/login?backpage=' + backpage + '&backtype=' + backtype });
 
     return false;
   }
-  return [uid, name, token];
+  console.log('uid', uid);
+  return {
+    uid: uid,
+    name: name,
+    dzsbhey: dzsbhey,
+    auth: auth };
+
 };
 
+// 获取用户头像的URL
+// Vue.prototype.getUserAvatar = function (uid, type) {
+//     let avatarUrl = [...uid.toString()]
+//     avatarUrl.splice(-2, 0, '/')
+//     avatarUrl.splice(-5, 0, '/')
+//     avatarUrl.splice(-8, 0, '/')
+//     if (avatarUrl.length === 9) {
+//       for (let i = 0; i < 3; i++) {
+//         avatarUrl.unshift('0')
+//       }
+//     } else {
+//       for (let i = 0; i < 2; i++) {
+//         avatarUrl.unshift('0')
+//       }
+//     }
+//     avatarUrl = `http://img.lkong.cn/avatar/${avatarUrl.join('')}_avatar_${type}.jpg`
+//     console.log('avatarUrl', avatarUrl)
+//     return avatarUrl
+//   }
+
+// 通用api
 _vue.default.prototype.apiServer = 'http://localhost:5000/api';
+_vue.default.prototype.lkongApi = 'http://lkong.cn/index.php?';
 
 _App.default.mpType = 'app';
 

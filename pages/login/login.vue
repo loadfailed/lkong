@@ -13,7 +13,7 @@
     <view class="login">
       <div class="login-input email">
         <i class="icon">
-          <text class="iconfont icon-yinhangka input-icon"></text>
+          <text class="iconfont icon-user input-icon"></text>
         </i>
         <input class="uni-input"
                focus
@@ -22,7 +22,7 @@
       </div>
       <div class="login-input pwd">
         <i class="icon">
-          <text class="iconfont icon-mima input-icon"></text>
+          <text class="iconfont icon-lock input-icon"></text>
         </i>
         <input class="uni-input"
                password
@@ -72,37 +72,36 @@ export default {
         return
       }
 
-      const data = {
+      const userData = {
         action: 'login',
         email: this.email,
         password: this.password,
         rememberme: 'on'
       }
 
+
       // 登录请求
       uni.request({
-        url: `${this.apiServer}/users/login`,
+        url: `http://lkong.cn/index.php?mod=login`,
         method: 'POST',
         header: {
           'content-type': 'application/x-www-form-urlencoded'
         },
-        data,
+        data: userData,
         success: res => {
-          if (res.data.data.success) {
-            console.log(res.data);
-            // 保存本地数据
-            uni.setStorageSync('dzsbhey', res.data.cookies[0].split(';')[0].replace('dzsbhey=', ''))
-            uni.setStorageSync('auth', res.data.cookies[1].split(';')[0].replace('auth=', ''))
-            uni.setStorageSync('name', res.data.data.name)
-            uni.setStorageSync('uid', res.data.data.uid)
-            uni.setStorageSync('yousuu', res.data.data.yousuu)
-
+          if (res.data.success) {
+            // #ifndef APP-PLUS
+            uni.setStorageSync('dzsbhey', res.cookies[0].split(';')[0].replace('dzsbhey=', ''))
+            uni.setStorageSync('auth', res.cookies[1].split(';')[0].replace('auth=', ''))
+            // #endif
+            uni.setStorageSync('name', res.data.name)
+            uni.setStorageSync('uid', res.data.uid)
+            uni.setStorageSync('yousuu', res.data.yousuu)
 
             // 返回来的页面
             if (this.options.backtype === '1') uni.redirectTo({ url: this.options.backpage })
             else uni.switchTab({ url: this.options.backpage })
           } else {
-            console.log('???');
             uni.showModal({
               title: '登录失败',
               content: res.data.error,
@@ -114,6 +113,8 @@ export default {
           console.log(res);
         }
       })
+
+
     }
   },
   mounted () {
@@ -126,7 +127,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("./../../common/animation.css");
+@import url("./../../static/animation.css");
 
 .login {
   .login-input {

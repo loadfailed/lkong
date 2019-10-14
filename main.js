@@ -17,13 +17,26 @@ Vue.prototype.checkLogin = function (backpage, backtype) {
     })
     return false
   }
-  console.log('uid', uid);
+  console.log('uid', uid)
+
+  // #ifndef APP-PLUS
   return {
     uid,
     name,
     dzsbhey,
     auth
   }
+  // #endif
+
+  // #ifdef APP-PLUS
+  return {
+    uid,
+    name
+  }
+  // #endif
+
+
+
 }
 
 // 获取用户头像的URL

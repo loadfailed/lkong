@@ -28,33 +28,29 @@ _vue.default.prototype.checkLogin = function (backpage, backtype) {
     return false;
   }
   console.log('uid', uid);
+
+
   return {
     uid: uid,
     name: name,
     dzsbhey: dzsbhey,
     auth: auth };
 
+
+
+
+
+
+
+
+
+
+
+
 };
 
 // 获取用户头像的URL
-// Vue.prototype.getUserAvatar = function (uid, type) {
-//     let avatarUrl = [...uid.toString()]
-//     avatarUrl.splice(-2, 0, '/')
-//     avatarUrl.splice(-5, 0, '/')
-//     avatarUrl.splice(-8, 0, '/')
-//     if (avatarUrl.length === 9) {
-//       for (let i = 0; i < 3; i++) {
-//         avatarUrl.unshift('0')
-//       }
-//     } else {
-//       for (let i = 0; i < 2; i++) {
-//         avatarUrl.unshift('0')
-//       }
-//     }
-//     avatarUrl = `http://img.lkong.cn/avatar/${avatarUrl.join('')}_avatar_${type}.jpg`
-//     console.log('avatarUrl', avatarUrl)
-//     return avatarUrl
-//   }
+
 
 // 通用api
 _vue.default.prototype.apiServer = 'http://localhost:5000/api';

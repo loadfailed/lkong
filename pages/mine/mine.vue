@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="icon-font icon-set set-icon"
-             @click="clearStorages"></div>
+             @click="openPopup"></div>
       </div>
 
       <div class="user-info">
@@ -71,6 +71,15 @@
       <uniLoadMore />
     </div>
 
+    <div>
+      <uni-popup ref="popup"
+                 type="center"
+                 custom="true">
+        <button type="default"
+                @click="clearStorages">退出账号</button>
+      </uni-popup>
+    </div>
+
   </div>
 </template>
 
@@ -82,7 +91,7 @@ import getUserAvatar from '../../tools/getUserAvatar';
 import PostListCard from '../../components/postListCard';
 
 
-import { uniLoadMore } from '@dcloudio/uni-ui'
+import { uniLoadMore, uniPopup } from '@dcloudio/uni-ui'
 
 export default {
   data () {
@@ -115,6 +124,7 @@ export default {
   },
   components: {
     uniLoadMore,
+    uniPopup,
     PostListCard
   },
   onLoad () {
@@ -141,14 +151,30 @@ export default {
   methods: {
     // 获取用户信息
     getUserInfo () {
-      uni.request({
-        url: this.apiServer + '/users/forwarding',
+      // #ifndef APP-PLUS || H5
+      // 小程序不能携带cookie，所以要处理
+      const base = {
+        url: `${this.apiServer}/users/forwarding`,
         method: 'POST',
         data: {
           auth: this.user.auth,
           dzsbhey: this.user.dzsbhey,
           url: `${this.lkongApi}mod=ajax&action=userconfig&_=${new Date().getTime()}`
         },
+      }
+      // #endif
+
+      // #ifdef APP-PLUS || H5
+      const base = {
+        url: `${this.lkongApi}mod=ajax&action=userconfig&_=${new Date().getTime()}`,
+        method: 'GET',
+        data: {},
+      }
+      // #endif
+      uni.request({
+        url: base.url,
+        method: base.method,
+        data: base.data,
         success: res => {
           for (let key in res.data) {
             this.user[key] = res.data[key]
@@ -162,6 +188,7 @@ export default {
           if (res.data.posts) {
             this.getUserPosts()
           }
+          console.log(base);
           console.log('请求用户信息', res.data)
         }
       })
@@ -219,14 +246,30 @@ export default {
           icon: 'none'
         })
       } else {
-        uni.request({
-          url: this.apiServer + '/users/forwarding',
+        // #ifndef APP-PLUS || H5
+        const base = {
+          url: `${this.apiServer}/users/forwarding`,
           method: 'POST',
           data: {
             auth: this.user.auth,
             dzsbhey: this.user.dzsbhey,
             url: `${this.lkongApi}mod=ajax&action=punch`
-          },
+          }
+        }
+        // #endif
+
+        // #ifdef APP-PLUS || H5
+        const base = {
+          url: `${this.lkongApi}mod=ajax&action=punch`,
+          method: 'GET',
+          data: {}
+        }
+        // #endif
+
+        uni.request({
+          url: base.url,
+          method: base.method,
+          data: base.data,
           success: res => {
             console.log('签到结果', res.data)
             this.user.punchday = res.data.punchday
@@ -234,6 +277,12 @@ export default {
           }
         })
       }
+    },
+
+
+    // 弹窗
+    openPopup () {
+      this.$refs.popup.open()
     },
 
     // 退出账号
@@ -262,7 +311,7 @@ export default {
 $light-colour: #b1d5e2;
 
 .header {
-  padding: 5%;
+  padding: 100rpx 20rpx 20rpx;
   overflow: hidden;
   background: linear-gradient(to bottom right, #36b5d1, #106a7d);
   border-radius: 0 0 50% 50%/0 0 40rpx 40rpx;
@@ -272,29 +321,33 @@ $light-colour: #b1d5e2;
     justify-content: space-between;
     .user {
       display: flex;
+      margin: 0 20rpx;
       .mine-avatar {
-        height: 90rpx;
-        width: 90rpx;
+        height: 120rpx;
+        width: 120rpx;
         border: 1rpx solid #fff;
         border-radius: 50%;
         background: $light-colour;
       }
       p {
-        line-height: 60rpx;
+        line-height: 80rpx;
         color: #fff;
-        font-size: 32rpx;
+        font-size: 38rpx;
         padding: 0 20rpx;
       }
       .wallet {
-        line-height: 30rpx;
+        line-height: 40rpx;
         color: $light-colour;
-        font-size: 24rpx;
+        font-size: 28rpx;
       }
     }
     .set-icon {
       font-family: "iconfont";
       line-height: 90rpx;
+      font-size: 20px;
+      font-weight: bold;
       color: $light-colour;
+      padding: 0 30rpx;
     }
   }
   .user-info {
@@ -332,7 +385,6 @@ $light-colour: #b1d5e2;
 .post-title {
   width: 92%;
   height: 80rpx;
-  // background: #eaeaea;
   font-size: 32rpx;
   line-height: 80rpx;
   text-align: center;
@@ -345,8 +397,8 @@ $light-colour: #b1d5e2;
   border-radius: 30rpx;
   margin-top: -40rpx;
   li {
-    margin: 40rpx 20rpx;
-    padding: 10rpx 40rpx 20rpx;
+    margin: 40rpx 0rpx;
+    padding: 20rpx 40rpx 30rpx;
     border-radius: 10rpx;
     background: #fff;
   }

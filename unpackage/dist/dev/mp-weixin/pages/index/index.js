@@ -131,7 +131,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var PostListCard = function PostListCard() {return Promise.all(/*! import() | components/postListCard */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/postListCard")]).then(__webpack_require__.bind(null, /*! ../../components/postListCard */ 58));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var PostListCard = function PostListCard() {return Promise.all(/*! import() | components/postListCard */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/postListCard")]).then(__webpack_require__.bind(null, /*! ../../components/postListCard */ 47));};var _default =
 
 
 

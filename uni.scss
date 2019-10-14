@@ -29,7 +29,7 @@ $uni-text-color-disable:#c0c0c0;
 
 /* 背景颜色 */
 $uni-bg-color:#ffffff;
-$uni-bg-color-grey:#f8f8f8;
+$uni-bg-color-grey:#f6fbff;
 $uni-bg-color-hover:#f1f1f1; //点击状态颜色
 $uni-bg-color-mask:rgba(0, 0, 0, 0.4); //遮罩颜色
 
@@ -74,3 +74,86 @@ $uni-color-subtitle: #555555; // 二级标题颜色
 $uni-font-size-subtitle:36upx;
 $uni-color-paragraph: #3F536E; // 文章段落颜色
 $uni-font-size-paragraph:30upx;
+
+
+// 真正1px边框
+@mixin thinBorder($directionMaps: bottom, $color: #ccc, $radius:(0, 0, 0, 0), $position: after) {
+  // 是否只有一个方向
+  $isOnlyOneDir: string==type-of($directionMaps);
+
+  @if ($isOnlyOneDir) {
+    $directionMaps: ($directionMaps);
+  }
+
+  @each $directionMap in $directionMaps {
+    border-#{$directionMap}: 1px solid $color;
+  }
+
+  // 判断圆角是list还是number
+  @if(list==type-of($radius)) {
+    border-radius: nth($radius, 1) nth($radius, 2) nth($radius, 3) nth($radius, 4);
+  }
+
+  @else {
+    border-radius: $radius;
+  }
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    & {
+      position: relative;
+
+      // 删除1像素密度比下的边框
+      @each $directionMap in $directionMaps {
+        border-#{$directionMap}: none;
+      }
+    }
+
+    &:#{$position} {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 200%;
+      height: 200%;
+      transform: scale(0.5);
+      box-sizing: border-box;
+      padding: 1px;
+      transform-origin: 0 0;
+      pointer-events: none;
+      border: 0 solid $color;
+
+      @each $directionMap in $directionMaps {
+        border-#{$directionMap}-width: 1px;
+      }
+
+      // 判断圆角是list还是number
+      @if(list==type-of($radius)) {
+        border-radius: nth($radius, 1)*2 nth($radius, 2)*2 nth($radius, 3)*2 nth($radius, 4)*2;
+      }
+
+      @else {
+        border-radius: $radius*2;
+      }
+
+    }
+  }
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 3) {
+    &:#{$position} {
+
+      // 判断圆角是list还是number
+      @if(list==type-of($radius)) {
+        border-radius: nth($radius, 1)*3 nth($radius, 2)*3 nth($radius, 3)*3 nth($radius, 4)*3;
+      }
+
+      @else {
+        border-radius: $radius*3;
+      }
+
+      width: 300%;
+      height: 300%;
+      transform: scale(0.3333);
+    }
+  }
+}

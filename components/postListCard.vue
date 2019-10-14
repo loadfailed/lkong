@@ -1,24 +1,8 @@
 <template>
+
   <div class="content">
 
-    <div class="header"
-         v-if="!isMine">
-
-      <div class="user">
-
-        <image class="avatar"
-               :mode="aspectFit"
-               :src="avatarUrl">
-        </image>
-
-        <p class="name">{{post.username}}</p>
-
-      </div>
-
-    </div>
-
-    <div v-else
-         class="dec">
+    <div class="dec">
       <p>
         <span>{{date+' '}}</span>
         <span v-if="post.isthread&&!post.isquote">发表了</span>
@@ -31,18 +15,21 @@
 
       <div class="header-line">
 
-        <p class="user">
+        <p class="thread-title">
+          <span>{{post.subject}}</span>
+        </p>
+
+        <p class="user"
+           v-if="post.t_authorid">
           <span class="icon-font icon-user user-icon"></span>
           <span>{{post.beQuoteUser?post.beQuoteUser:post.t_author}}</span>
+
         </p>
 
       </div>
 
-      <p class="title">
-        <span>{{post.subject}}</span>
-      </p>
-
-      <div class="context">{{post.beQuoteMsg}}</div>
+      <div class="context"
+           v-if="post.beQuoteMsg">{{post.beQuoteMsg}}</div>
 
     </div>
 
@@ -85,6 +72,7 @@ export default {
 
 <style lang="scss" scoped>
 .content {
+  font-size: 30rpx;
   .header {
     display: flex;
     justify-content: space-between;
@@ -109,46 +97,47 @@ export default {
   }
 
   .dec {
-    font-size: 24rpx;
+    font-size: 26rpx;
     line-height: 64rpx;
     color: $uni-text-color-grey;
   }
 
   .quote {
-    background: #f6fbff;
+    background: #e5f6fb;
     padding: 20rpx;
     margin: 0 -20rpx;
     border-radius: 10rpx;
-    font-size: 30rpx;
     line-height: 50rpx;
 
     .header-line {
-      display: flex;
-      justify-content: space-between;
       color: $uni-text-color-grey;
-      padding: 10rpx 0;
-      font-size: 26rpx;
       line-height: 40rpx;
       .user {
+        padding-top: 20rpx;
+        margin-top: 20rpx;
+        @include thinBorder((top), #cbe7f0);
         .user-icon {
           font-family: "iconfont";
           padding: 0 6rpx;
-          color: $uni-text-color-grey;
         }
       }
     }
-    .title {
-      color: #666;
-    }
+
     .context {
-      color: $uni-text-color-grey;
+      margin-top: 5rpx;
+      color: #333;
     }
   }
   .reply {
     padding: 30rpx 0 0;
     .context {
-      font-size: 32rpx;
+      font-size: 36rpx;
+      letter-spacing: 2rpx;
     }
+  }
+  .thread-title {
+    color: #333;
+    font-weight: bold;
   }
 }
 </style>

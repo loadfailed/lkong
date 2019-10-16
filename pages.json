@@ -2,41 +2,41 @@
   "pages": [{
     "path": "pages/index/index",
     "style": {
-      "navigationBarTitleText": "首页"
+      "navigationBarTitleText": ""
     }
   }, {
     "path": "pages/write/write",
     "style": {
-      "navigationBarTitleText": "写作"
+      "navigationBarTitleText": ""
     }
   }, {
     "path": "pages/mine/mine",
     "style": {
-      "navigationBarTitleText": "个人中心",
-      "enablePullDownRefresh": true
+      "navigationBarTitleText": "",
+      "navigationStyle": "custom"
     }
   }, {
     "path": "pages/login/login",
     "style": {}
   }],
   "globalStyle": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F8F8F8",
-    "app-plus": {
-      "navigationStyle": "custom"
-    }
+    "enablePullDownRefresh": true
+
+
   },
   "tabBar": {
     "color": "#707070",
     "selectedColor": "#DE533A",
     "list": [{
       "pagePath": "pages/index/index",
-      "text": "文章"
+      "text": "信息流"
     }, {
       "pagePath": "pages/write/write",
-      "text": "写作"
+      "text": "板块"
     }, {
       "pagePath": "pages/mine/mine",
       "text": "我的"

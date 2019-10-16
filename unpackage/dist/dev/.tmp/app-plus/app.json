@@ -6,11 +6,11 @@
     "pages/login/login"
   ],
   "window": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F8F8F8",
-    "navigationStyle": "custom"
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "color": "#707070",
@@ -18,11 +18,11 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "文章"
+        "text": "信息流"
       },
       {
         "pagePath": "pages/write/write",
-        "text": "写作"
+        "text": "板块"
       },
       {
         "pagePath": "pages/mine/mine",

@@ -7598,7 +7598,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 35:
+/***/ 33:
 /*!***************************************************************************!*\
   !*** /Users/mojave/Documents/Project/uni-app/reader/tools/setQuoteMsg.js ***!
   \***************************************************************************/
@@ -7638,7 +7638,7 @@ setQuoteMsg;exports.default = _default;
 
 /***/ }),
 
-/***/ 36:
+/***/ 34:
 /*!*****************************************************************************!*\
   !*** /Users/mojave/Documents/Project/uni-app/reader/tools/getUserAvatar.js ***!
   \*****************************************************************************/
@@ -8565,7 +8565,7 @@ main();
 
 /***/ }),
 
-/***/ 52:
+/***/ 50:
 /*!*************************************************************************!*\
   !*** /Users/mojave/Documents/Project/uni-app/reader/tools/formaDate.js ***!
   \*************************************************************************/
@@ -8617,7 +8617,127 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页" }, "pages/write/write": { "navigationBarTitleText": "写作" }, "pages/mine/mine": { "navigationBarTitleText": "个人中心", "enablePullDownRefresh": true }, "pages/login/login": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "" }, "pages/write/write": { "navigationBarTitleText": "" }, "pages/mine/mine": { "navigationBarTitleText": "", "navigationStyle": "custom" }, "pages/login/login": {} }, "globalStyle": { "navigationBarTextStyle": "white", "navigationBarTitleText": "", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8", "enablePullDownRefresh": true } };exports.default = _default;
+
+/***/ }),
+
+/***/ 73:
+/*!**********************************************************************!*\
+  !*** /Users/mojave/Documents/Project/uni-app/reader/api/indexApi.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ../tools/request */ 74));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var indexApi = {
+  getIndexPosts: function getIndexPosts() {
+    return (0, _request.default)("mod=data&sars=index/&_=".concat(new Date().getTime()));
+  } };var _default =
+
+indexApi;exports.default = _default;
+
+/***/ }),
+
+/***/ 74:
+/*!***********************************************************************!*\
+  !*** /Users/mojave/Documents/Project/uni-app/reader/tools/request.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+
+
+
+var baseURL = 'http://111.231.114.121:5000/api';
+
+
+
+
+function request(url) {
+
+
+  var dzsbhey = uni.getStorageSync('dzsbhey');
+  var auth = uni.getStorageSync('auth');
+  if (!dzsbhey && !auth) {
+    uni.redirectTo({
+      url: '../login/login?backpage=' + backpage + '&backtype=' + backtype });
+
+  }
+  var params = {
+    url: '/users/forwarding',
+    method: 'POST',
+    data: {
+      url: url,
+      dzsbhey: dzsbhey,
+      auth: auth } };
+
+
+
+
+
+
+
+
+
+
+
+
+
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: baseURL + params.url,
+      method: params.method,
+      data: _objectSpread({},
+      params.data),
+
+      success: function success(res) {
+        resolve(res.data);
+      },
+      fail: function fail(err) {
+        reject(err);
+      } });
+
+
+  });
+}var _default =
+
+request;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 76:
+/*!*********************************************************************!*\
+  !*** /Users/mojave/Documents/Project/uni-app/reader/api/mineApi.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ../tools/request */ 74));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var uid = uni.getStorageSync('uid');
+
+var mineApi = {
+  getUserInfo: function getUserInfo() {var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return (0, _request.default)("mod=ajax&action=userconfig&_=".concat(new Date().getTime()));
+  },
+
+  getUserPosts: function getUserPosts() {var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return (0, _request.default)("mod=data&sars=user/".concat(uid, "&_=").concat(new Date().getTime()));
+  },
+
+  getMorePosts: function getMorePosts(nexttime) {
+    return (0, _request.default)("mod=data&sars=user/".concat(uid, "&nexttime=").concat(nexttime, "&_=").concat(new Date().getTime()));
+  } };var _default =
+
+
+
+mineApi;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

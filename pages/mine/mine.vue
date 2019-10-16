@@ -90,6 +90,8 @@ import getUserAvatar from '../../tools/getUserAvatar';
 
 import PostListCard from '../../components/postListCard';
 
+import mineApi from '../../api/mineApi'
+
 
 import { uniLoadMore, uniPopup } from '@dcloudio/uni-ui'
 
@@ -114,8 +116,8 @@ export default {
 
       posts: [],
 
-      curtime: '',
-      nexttime: '',
+      curtime: 0,
+      nexttime: 0,
 
       isClearStorage: false
 
@@ -144,85 +146,54 @@ export default {
   },
   // 下拉加载
   onReachBottom () {
-    this.getMorePost()
+    this.getMorePosts()
   },
   computed: {
   },
   methods: {
     // 获取用户信息
     getUserInfo () {
-      // #ifndef APP-PLUS || H5
-      // 小程序不能携带cookie，所以要处理
-      const base = {
-        url: `${this.apiServer}/users/forwarding`,
-        method: 'POST',
-        data: {
-          auth: this.user.auth,
-          dzsbhey: this.user.dzsbhey,
-          url: `${this.lkongApi}mod=ajax&action=userconfig&_=${new Date().getTime()}`
-        },
-      }
-      // #endif
-
-      // #ifdef APP-PLUS || H5
-      const base = {
-        url: `${this.lkongApi}mod=ajax&action=userconfig&_=${new Date().getTime()}`,
-        method: 'GET',
-        data: {},
-      }
-      // #endif
-      uni.request({
-        url: base.url,
-        method: base.method,
-        data: base.data,
-        success: res => {
-          for (let key in res.data) {
-            this.user[key] = res.data[key]
+      mineApi.getUserInfo()
+        .then(res => {
+          for (let key in res) {
+            this.user[key] = res[key]
           }
-          const punchtime = res.data.punchtime * 1000
+          const punchtime = res.punchtime * 1000
           const year = new Date().getFullYear()
           const month = new Date().getMonth()
           const date = new Date().getDate()
           const todaytime = new Date(year, month, date).getTime()
           punchtime === todaytime ? this.user.isPunch = true : this.user.isPunch = false
-          if (res.data.posts) {
+          if (res.posts) {
             this.getUserPosts()
           }
-          console.log(base);
-          console.log('请求用户信息', res.data)
-        }
-      })
+          // console.log('请求用户信息', res.data)
+        })
     },
 
     // 获取所有发帖
     getUserPosts () {
-      uni.request({
-        url: `${this.lkongApi}mod=data&sars=user/${this.user.uid}&_=${new Date().getTime()}`,
-        method: 'GET',
-        success: res => {
-          res.data.data
-          const posts = res.data.data.map(item => {
+      mineApi.getUserPosts()
+        .then(res => {
+          const posts = res.data.map(item => {
             if (item.isquote) {
               return setQuoteMsg(item)
             } else {
               return item
             }
           })
-          this.curtime = res.data.curtime
-          this.nexttime = res.data.nexttime
+          this.curtime = res.curtime
+          this.nexttime = res.nexttime
           this.posts = posts.reverse();
-          console.log('请求所有发帖', this.posts);
-        }
-      })
+          // console.log('请求所有发帖', this.posts)
+        })
     },
 
     // 加载更多
-    getMorePost () {
-      uni.request({
-        url: `${this.lkongApi}mod=data&sars=user/${this.user.uid}&nexttime=${this.nexttime}&_=${new Date().getTime()}`,
-        method: 'GET',
-        success: res => {
-          const posts = res.data.data.map(item => {
+    getMorePosts () {
+      mineApi.getMorePosts()
+        .then(res => {
+          const posts = res.data.map(item => {
             if (item.isquote) {
               return setQuoteMsg(item)
             } else {
@@ -232,10 +203,9 @@ export default {
           for (let post of posts.reverse()) {
             this.posts.push(post)
           }
-          console.log('请求加载更多', posts);
+          // console.log('请求加载更多', posts)
           this.nexttime = res.data.nexttime
-        }
-      })
+        })
     },
 
     // 签到
@@ -308,7 +278,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$light-colour: #b1d5e2;
+$light-color: #b1d5e2;
 
 .header {
   padding: 100rpx 20rpx 20rpx;
@@ -327,7 +297,7 @@ $light-colour: #b1d5e2;
         width: 120rpx;
         border: 1rpx solid #fff;
         border-radius: 50%;
-        background: $light-colour;
+        background: $light-color;
       }
       p {
         line-height: 80rpx;
@@ -337,7 +307,7 @@ $light-colour: #b1d5e2;
       }
       .wallet {
         line-height: 40rpx;
-        color: $light-colour;
+        color: $light-color;
         font-size: 28rpx;
       }
     }
@@ -346,7 +316,7 @@ $light-colour: #b1d5e2;
       line-height: 90rpx;
       font-size: 20px;
       font-weight: bold;
-      color: $light-colour;
+      color: $light-color;
       padding: 0 30rpx;
     }
   }
@@ -356,7 +326,7 @@ $light-colour: #b1d5e2;
     div {
       width: 25%;
       p {
-        color: $light-colour;
+        color: $light-color;
         font-size: 24rpx;
         line-height: 48rpx;
         text-align: center;

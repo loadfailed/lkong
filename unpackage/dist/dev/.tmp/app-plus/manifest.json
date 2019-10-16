@@ -38,8 +38,8 @@
     "launchwebview": {},
     "statusbar": {
       "immersed": "supportedDevice",
-      "style": "dark",
-      "background": "#F8F8F8"
+      "style": "light",
+      "background": "#FFFFFF"
     },
     "usingComponents": true,
     "nvueCompiler": "uni-app",

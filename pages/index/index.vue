@@ -1,45 +1,43 @@
 <template>
-  <view class="content">
-    <post-list-card />
-  </view>
+  <div class="content">
+    <ul>
+      <li v-for="(post,index) in posts"
+          :key="index">
+        <post-list-card :post='post'
+                        :isMine="false" />
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-import PostListCard from '../../components/postListCard';
+import PostListCard from '../../components/postListCard'
+import indexApi from '../../api/indexApi'
+
 export default {
   data () {
     return {
-      title: 'Hello'
+      posts: {},
+      curtime: 0,
+      nexttime: 0
     }
   },
   components: {
     PostListCard
   },
   onLoad () {
-
-
+    indexApi.getIndexPosts()
+      .then(res => {
+        this.posts = res.data
+        console.log('首页请求结果', res);
+      })
   },
   methods: {
+
 
   }
 }
 </script>
 
 <style lang="scss" scoped>
-/* .content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-} */
-/* 
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
-} */
 </style>

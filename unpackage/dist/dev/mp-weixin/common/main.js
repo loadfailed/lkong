@@ -49,13 +49,6 @@ _vue.default.prototype.checkLogin = function (backpage, backtype) {
 
 };
 
-// 获取用户头像的URL
-
-
-// 通用api
-_vue.default.prototype.apiServer = 'http://localhost:5000/api';
-_vue.default.prototype.lkongApi = 'http://lkong.cn/index.php?';
-
 _App.default.mpType = 'app';
 
 var app = new _vue.default(_objectSpread({},

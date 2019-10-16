@@ -1,2 +1,1 @@
-setCssToHead(["@charset \x22UTF-8\x22;\n",],undefined,{path:"./pages/index/index.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/index/index.wxml') } }));

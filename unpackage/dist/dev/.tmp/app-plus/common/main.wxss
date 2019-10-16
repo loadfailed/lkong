@@ -386,6 +386,7 @@
 }
 page {
   background: #f6f6f6;
+  margin: 0 0 100rpx;
   font-size: 32rpx;
 }
 

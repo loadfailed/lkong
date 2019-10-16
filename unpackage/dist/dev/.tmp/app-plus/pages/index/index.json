@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "首页",
+  "navigationBarTitleText": "",
   "usingComponents": {
     "post-list-card": "/components/postListCard"
   }

@@ -39,13 +39,6 @@ Vue.prototype.checkLogin = function (backpage, backtype) {
 
 }
 
-// 获取用户头像的URL
-
-
-// 通用api
-Vue.prototype.apiServer = 'http://localhost:5000/api'
-Vue.prototype.lkongApi = 'http://lkong.cn/index.php?'
-
 App.mpType = 'app'
 
 const app = new Vue({

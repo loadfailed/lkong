@@ -1,1 +1,1 @@
-<view class="content data-v-5e5ba790"><post-list-card vue-id="1" class="data-v-5e5ba790" bind:__l="__l"></post-list-card></view>
+<view class="content _div data-v-5e5ba790"><view class="_ul data-v-5e5ba790"><block wx:for="{{posts}}" wx:for-item="post" wx:for-index="index" wx:key="index"><view class="_li data-v-5e5ba790"><post-list-card vue-id="{{'1-'+index}}" post="{{post}}" isMine="{{false}}" class="data-v-5e5ba790" bind:__l="__l"></post-list-card></view></block></view></view>

@@ -37,7 +37,7 @@ function request(url) {
   }
   // #endif
 
-
+  console.log('请求参数', params)
   return new Promise((resolve, reject) => {
     uni.request({
       url: baseURL + params.url,
@@ -46,6 +46,7 @@ function request(url) {
         ...params.data
       },
       success: res => {
+        console.log('请求结果', res.data);
         resolve(res.data)
       },
       fail: err => {

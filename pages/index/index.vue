@@ -2,14 +2,20 @@
   <div class="content">
     <status-bar />
     <div class="nav-bar">
-      <div class="title">
-        <span>全部</span>
-        <span :style="{color:'#ddd'}">|</span>
-        <span>仅看主题</span>
-        <span :style="{color:'#ddd'}">|</span>
-        <span>@我的</span>
-      </div>
-      <div class="search">搜索</div>
+
+      <p :class="{activeTab:'全部'===activeTab}"
+         @click="getIndexPosts">全部</p>
+
+      <p :style="{color:'#ddd'}">|</p>
+
+      <p :class="{activeTab:'仅看主题'===activeTab}"
+         @click="getThreadPosts">仅看主题</p>
+
+      <p :style="{color:'#ddd'}">|</p>
+
+      <p :class="{activeTab:'@我的'===activeTab}"
+         @click="getAtPosts">@我的</p>
+
     </div>
     <ul class="post-list">
       <li v-for="(post,index) in posts"
@@ -18,14 +24,17 @@
                         :isMine="false" />
       </li>
     </ul>
+    <uniLoadMore />
+
   </div>
 </template>
 
 <script>
-import PostListCard from '../../components/postListCard'
+
+import postListCard from '../../components/postListCard'
 import indexApi from '../../api/indexApi'
 import setQuoteMsg from '../../tools/setQuoteMsg'
-
+import { uniLoadMore, uniPopup } from '@dcloudio/uni-ui'
 
 
 export default {
@@ -33,37 +42,87 @@ export default {
     return {
       posts: {},
       curtime: 0,
-      nexttime: 0
+      nexttime: 0,
+      activeTab: '全部'
     }
   },
   components: {
-    PostListCard
+    postListCard,
+    uniLoadMore
   },
   onLoad () {
-    indexApi.getIndexPosts()
-      .then(res => {
-        // console.log(res.data);
-        const posts = res.data.map(item => {
-          if (item.isquote) {
-            return setQuoteMsg(item)
-          } else {
-            return item
-          }
-        })
-        this.curtime = res.curtime
-        this.nexttime = res.nexttime
-        this.posts = posts.reverse()
-        // console.log('首页请求结果', posts)
-      })
+    this.getIndexPosts()
   },
   // 上拉刷新
   onPullDownRefresh () {
-    console.log('refresh');
-    setTimeout(function () {
-      uni.stopPullDownRefresh();
-    }, 1000);
+    this.getIndexPosts()
+    uni.stopPullDownRefresh()
+  },
+  // 下拉加载
+  onReachBottom () {
+    this.getMorePosts()
   },
   methods: {
+    // 请求首页帖子列表
+    getIndexPosts () {
+      this.posts = []
+      indexApi.getIndexPosts()
+        .then(res => {
+          // console.log(res.data);
+          const posts = res.data.map(item => {
+            if (item.isquote) {
+              return setQuoteMsg(item)
+            } else {
+              return item
+            }
+          })
+          this.curtime = res.curtime
+          this.nexttime = res.nexttime
+          this.posts = posts.reverse()
+        })
+    },
+
+    // 请求更多
+    getMorePosts () {
+      this.activeTab = '全部'
+      indexApi.getMorePosts(this.nexttime)
+        .then(res => {
+          const posts = res.data.map(item => {
+            if (item.isquote) {
+              return setQuoteMsg(item)
+            } else {
+              return item
+            }
+          })
+          for (let post of posts.reverse()) {
+            this.posts.push(post)
+          }
+          this.nexttime = res.data.nexttime
+        })
+    },
+
+    // 请求全部
+    getIndexPosts () {
+      this.activeTab = '全部'
+        = 'index'
+      this.getIndexPosts()
+    },
+
+    // 只看主题
+    getThreadPosts () {
+      this.activeTab = '仅看主题'
+      const arr = this.posts.reduce((newArr, item) => {
+        if (item.isthread) {
+          return 1
+        }
+      }, 0)
+    },
+
+    // 请求@我的
+    getAtPosts () {
+      this.activeTab = '@我的'
+      this.getIndexPosts()
+    }
 
 
   }
@@ -83,20 +142,23 @@ export default {
 }
 
 .nav-bar {
-  height: 120rpx;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background: #fff;
+  background: #09c;
+  color: #ddd;
   position: fixed;
   z-index: 998;
   box-shadow: 0 0 4rpx 4rpx rgba(#999, 0.5);
-  .title {
-    span {
-      padding: 0 20rpx;
-      font-size: 34rpx;
-    }
+  p {
+    padding: 30rpx;
+    text-align: center;
+    font-size: 34rpx;
+  }
+  .activeTab {
+    color: #fff;
+    border-bottom: 2px solid #fff;
   }
 }
 </style>

@@ -149,7 +149,8 @@ export default {
       font-weight: bold;
       .form-icon {
         font-family: "iconfont";
-        padding: 0 10rpx;
+        color: rgb(226, 114, 63);
+        padding: 0 20rpx;
       }
     }
   }
@@ -167,11 +168,10 @@ export default {
       color: $uni-text-color-grey;
 
       .mine-avatar {
-        height: 54rpx;
-        width: 54rpx;
-        border: 1rpx solid #b1d5e2;
+        height: 64rpx;
+        width: 64rpx;
         border-radius: 50%;
-        background: #b1d5e2;
+        background: rgb(226, 114, 63);
       }
     }
   }

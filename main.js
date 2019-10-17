@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App'
+import statusBar from './components/statusBar.vue'
 
 Vue.config.productionTip = false
+
+Vue.component('statusBar', statusBar)
 
 // 检查用户有没有登录
 Vue.prototype.checkLogin = function (backpage, backtype) {
@@ -34,9 +37,6 @@ Vue.prototype.checkLogin = function (backpage, backtype) {
     name
   }
   // #endif
-
-
-
 }
 
 App.mpType = 'app'

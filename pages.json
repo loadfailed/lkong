@@ -12,8 +12,7 @@
   }, {
     "path": "pages/mine/mine",
     "style": {
-      "navigationBarTitleText": "",
-      "navigationStyle": "custom"
+      "navigationBarTitleText": ""
     }
   }, {
     "path": "pages/login/login",
@@ -23,8 +22,12 @@
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "",
     "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationStyle": "custom",
     "backgroundColor": "#F8F8F8",
-    "enablePullDownRefresh": true
+    "enablePullDownRefresh": true,
+    "app-plus": {
+      "softinputNavBar": "none"
+    }
 
 
   },

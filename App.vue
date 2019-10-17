@@ -21,7 +21,4 @@ page {
   background: #f6f6f6;
   font-size: 32rpx;
 }
-.content {
-  padding: 0 0 100rpx;
-}
 </style>

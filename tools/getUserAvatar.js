@@ -13,7 +13,6 @@ function getUserAvatar(uid, type) {
     }
   }
   avatarUrl = `http://img.lkong.cn/avatar/${avatarUrl.join('')}_avatar_${type}.jpg`
-  console.log('avatarUrl', avatarUrl)
   return avatarUrl
 }
 

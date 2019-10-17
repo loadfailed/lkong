@@ -13,10 +13,9 @@ function setQuoteMsg(item) {
     item.beQuoteMsg = setStr(item.beQuoteMsg, 7, 13)
 
     // // 回复的内容
-    const regMessage = /<\/div><\/div><\/div>\S*/
+    const regMessage = /<\/div><\/div><\/div>[\S\s]*/
     item.message = regMessage.exec(item.message)[0]
     item.message = setStr(item.message, 18, 0)
-
     return item
   } else return item
 }

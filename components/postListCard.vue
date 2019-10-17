@@ -33,7 +33,8 @@
     </div>
 
     <div class="reply">
-      <div class="context">{{post.message}}</div>
+      <rich-text :nodes="post.message"
+                 class="context"></rich-text>
 
       <div class="dec"
            v-if="isMine">{{date}}</div>
@@ -138,11 +139,13 @@ export default {
 
     .context {
       margin-top: 5rpx;
-      color: #333;
+      color: #666;
     }
 
     .thread-title {
       color: #333;
+      font-size: 34rpx;
+      line-height: 60rpx;
       font-weight: bold;
       .form-icon {
         font-family: "iconfont";
@@ -154,23 +157,27 @@ export default {
   .reply {
     padding: 30rpx 0 0;
     .context {
-      font-size: 36rpx;
+      font-size: 34rpx;
       letter-spacing: 2rpx;
     }
 
     .dec {
-      font-size: 28rpx;
+      font-size: 30rpx;
       margin-top: 20rpx;
       color: $uni-text-color-grey;
 
       .mine-avatar {
-        height: 48rpx;
-        width: 48rpx;
-        border: 1rpx solid #fff;
+        height: 54rpx;
+        width: 54rpx;
+        border: 1rpx solid #b1d5e2;
         border-radius: 50%;
         background: #b1d5e2;
       }
     }
   }
+}
+
+.context {
+  word-break: break-all;
 }
 </style>

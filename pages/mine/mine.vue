@@ -136,13 +136,12 @@ export default {
     }
     this.user.avatarUrl = getUserAvatar(this.user.uid, 'middle')
     this.getUserInfo()
+    this.getUserPosts()
   },
   // 上拉刷新
   onPullDownRefresh () {
-    console.log('refresh');
-    setTimeout(function () {
-      uni.stopPullDownRefresh();
-    }, 1000);
+    this.getUserPosts()
+    uni.stopPullDownRefresh()
   },
   // 下拉加载
   onReachBottom () {
@@ -164,15 +163,12 @@ export default {
           const date = new Date().getDate()
           const todaytime = new Date(year, month, date).getTime()
           punchtime === todaytime ? this.user.isPunch = true : this.user.isPunch = false
-          if (res.posts) {
-            this.getUserPosts()
-          }
-          // console.log('请求用户信息', res.data)
         })
     },
 
     // 获取所有发帖
     getUserPosts () {
+      this.posts = []
       mineApi.getUserPosts()
         .then(res => {
           const posts = res.data.map(item => {
@@ -184,7 +180,7 @@ export default {
           })
           this.curtime = res.curtime
           this.nexttime = res.nexttime
-          this.posts = posts.reverse();
+          this.posts = posts.reverse()
           // console.log('请求所有发帖', this.posts)
         })
     },
@@ -283,7 +279,7 @@ $light-color: #b1d5e2;
 .header {
   padding: 100rpx 20rpx 20rpx;
   overflow: hidden;
-  background: linear-gradient(to bottom right, #36b5d1, #106a7d);
+  background: linear-gradient(to bottom right, #09c, #106a7d);
   border-radius: 0 0 50% 50%/0 0 40rpx 40rpx;
 
   .image-content {

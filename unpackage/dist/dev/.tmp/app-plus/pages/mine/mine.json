@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "",
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "uni-load-more": "/node-modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more",
-    "uni-popup": "/node-modules/@dcloudio/uni-ui/lib/uni-popup/uni-popup",
-    "post-list-card": "/components/postListCard"
-  }
-}

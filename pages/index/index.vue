@@ -3,8 +3,8 @@
     <status-bar />
     <div class="nav-bar">
 
-      <p :class="{activeTab:'全部'===activeTab}"
-         @click="getIndexPosts">全部</p>
+      <p :class="{activeTab:'信息流'===activeTab}"
+         @click="getIndexPosts">信息流</p>
 
       <p :style="{color:'#ddd'}">|</p>
 
@@ -14,7 +14,7 @@
       <p :style="{color:'#ddd'}">|</p>
 
       <p :class="{activeTab:'@我的'===activeTab}"
-         @click="getAtPosts">@我的</p>
+         @click="getAtMePosts">@我的</p>
 
     </div>
     <ul class="post-list">
@@ -43,7 +43,7 @@ export default {
       posts: {},
       curtime: 0,
       nexttime: 0,
-      activeTab: '全部'
+      activeTab: '信息流'
     }
   },
   components: {
@@ -51,77 +51,123 @@ export default {
     uniLoadMore
   },
   onLoad () {
-    this.getIndexPosts()
+    this.indexPosts()
   },
-  // 上拉刷新
+  // 下拉刷新
   onPullDownRefresh () {
-    this.getIndexPosts()
+    if (this.activeTab === '信息流') this.indexPosts()
+    else if (this.activeTab === '仅看主题') this.threadPosts()
+    else this.getMoreAtMePosts()
     uni.stopPullDownRefresh()
   },
-  // 下拉加载
+  // 上拉加载
   onReachBottom () {
-    this.getMorePosts()
+    if (this.activeTab === '信息流') this.moreIndexPosts()
+    else if (this.activeTab === '仅看主题') this.moreThreadPosts()
+    else this.getMoreAtMePosts()
+  },
+
+  computed: {
+
   },
   methods: {
-    // 请求首页帖子列表
-    getIndexPosts () {
+    // 格式化帖子
+    setQuoteMsg (list) {
+      const posts = list.map(item => {
+        if (item.isquote) {
+          return setQuoteMsg(item)
+        } else {
+          return item
+        }
+      })
+      return posts.reverse()
+    },
+
+    // 请求信息流
+    indexPosts () {
       this.posts = []
       indexApi.getIndexPosts()
         .then(res => {
-          // console.log(res.data);
-          const posts = res.data.map(item => {
-            if (item.isquote) {
-              return setQuoteMsg(item)
-            } else {
-              return item
-            }
-          })
+          this.posts = this.setQuoteMsg(res.data)
           this.curtime = res.curtime
           this.nexttime = res.nexttime
-          this.posts = posts.reverse()
         })
     },
 
-    // 请求更多
-    getMorePosts () {
-      this.activeTab = '全部'
-      indexApi.getMorePosts(this.nexttime)
+
+    // 请求更多信息流
+    moreIndexPosts () {
+      indexApi.getMoreIndexPosts(this.nexttime)
         .then(res => {
-          const posts = res.data.map(item => {
-            if (item.isquote) {
-              return setQuoteMsg(item)
-            } else {
-              return item
-            }
-          })
+          const posts = this.setQuoteMsg(res.data)
           for (let post of posts.reverse()) {
             this.posts.push(post)
           }
-          this.nexttime = res.data.nexttime
+          this.nexttime = res.nexttime
         })
     },
 
-    // 请求全部
+
+    // 请求主题帖子列表
+    threadPosts () {
+      this.posts = []
+      indexApi.getThreadPosts()
+        .then(res => {
+          this.posts = this.setQuoteMsg(res.data)
+          this.curtime = res.curtime
+          this.nexttime = res.nexttime
+        })
+    },
+
+    // 请求更多主题帖子列表
+    moreThreadPosts () {
+      this.posts = []
+      indexApi.getMoreThreadPosts(this.nexttime)
+        .then(res => {
+          const posts = this.setQuoteMsg(res.data)
+          for (let post of posts.reverse()) {
+            this.posts.push(post)
+          }
+          this.nexttime = res.nexttime
+        })
+    },
+
+
+
+
+    // 只看信息流
     getIndexPosts () {
-      this.activeTab = '全部'
-        = 'index'
-      this.getIndexPosts()
+      this.activeTab = '信息流'
+      this.indexPosts()
     },
 
     // 只看主题
     getThreadPosts () {
       this.activeTab = '仅看主题'
-      const arr = this.posts.reduce((newArr, item) => {
-        if (item.isthread) {
-          return 1
-        }
-      }, 0)
+      this.threadPosts()
     },
 
-    // 请求@我的
-    getAtPosts () {
+    // 只看@我的
+    getAtMePosts () {
       this.activeTab = '@我的'
-      this.getIndexPosts()
+      this.posts = []
+      indexApi.getAtMePosts()
+        .then(res => {
+          this.posts = this.setQuoteMsg(res.data)
+          this.nexttime = res.nexttime
+        })
+    },
+
+    // 请求更多@我的
+    getMoreAtMePosts () {
+      indexApi.getMoreAtMePosts(this.nexttime)
+        .then(res => {
+          const posts = this.setQuoteMsg(res.data)
+          for (let post of posts.reverse()) {
+            this.posts.push(post)
+          }
+          this.nexttime = res.nexttime
+        })
     }
 
 
@@ -132,7 +178,7 @@ export default {
 <style lang="scss" scoped>
 .post-list {
   border-radius: 30rpx;
-  margin-top: 160rpx;
+  margin-top: 120rpx;
   li {
     margin: 40rpx 0rpx;
     padding: 20rpx 40rpx 30rpx;
@@ -144,21 +190,23 @@ export default {
 .nav-bar {
   width: 100%;
   display: flex;
-  justify-content: center;
+  padding: 0 20rpx;
+  // justify-content: center;
   align-items: center;
   background: #09c;
   color: #ddd;
   position: fixed;
   z-index: 998;
-  box-shadow: 0 0 4rpx 4rpx rgba(#999, 0.5);
+  box-shadow: 0 0 4rpx 4rpx rgba(#333, 0.5);
   p {
-    padding: 30rpx;
+    padding: 20rpx;
     text-align: center;
-    font-size: 34rpx;
+    font-size: 30rpx;
   }
   .activeTab {
     color: #fff;
-    border-bottom: 2px solid #fff;
+    margin-top: 8rpx;
+    border-bottom: 8rpx solid #fff;
   }
 }
 </style>

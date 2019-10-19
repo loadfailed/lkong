@@ -17,6 +17,9 @@
   }, {
     "path": "pages/login/login",
     "style": {}
+  }, {
+    "path": "pages/thread/thread",
+    "style": {}
   }],
   "globalStyle": {
     "navigationBarTextStyle": "white",

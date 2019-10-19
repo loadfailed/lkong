@@ -117,11 +117,9 @@ export default {
 
     }
   },
-  mounted () {
-    for (let i = 0; i < 71; i++) this.dots.push(i)
-  },
   onLoad (options) {
     this.options = options
+    for (let i = 0; i < 71; i++) this.dots.push(i)
   }
 }
 </script>

@@ -136,7 +136,7 @@ export default {
     }
     this.user.avatarUrl = getUserAvatar(this.user.uid, 'middle')
     this.getUserInfo()
-    this.getUserPosts()
+    this.getUserPosts(user.uid)
   },
   // 上拉刷新
   onPullDownRefresh () {
@@ -167,9 +167,9 @@ export default {
     },
 
     // 获取所有发帖
-    getUserPosts () {
+    getUserPosts (uid) {
       this.posts = []
-      mineApi.getUserPosts()
+      mineApi.getUserPosts(uid)
         .then(res => {
           const posts = res.data.map(item => {
             if (item.isquote) {
@@ -212,36 +212,12 @@ export default {
           icon: 'none'
         })
       } else {
-        // #ifndef APP-PLUS || H5
-        const base = {
-          url: `${this.apiServer}/users/forwarding`,
-          method: 'POST',
-          data: {
-            auth: this.user.auth,
-            dzsbhey: this.user.dzsbhey,
-            url: `${this.lkongApi}mod=ajax&action=punch`
-          }
-        }
-        // #endif
-
-        // #ifdef APP-PLUS || H5
-        const base = {
-          url: `${this.lkongApi}mod=ajax&action=punch`,
-          method: 'GET',
-          data: {}
-        }
-        // #endif
-
-        uni.request({
-          url: base.url,
-          method: base.method,
-          data: base.data,
-          success: res => {
-            console.log('签到结果', res.data)
-            this.user.punchday = res.data.punchday
+        mineApi.getPunch()
+          .then(res => {
+            console.log(res);
+            this.user.punchday = res.punchday
             this.user.isPunch = true
-          }
-        })
+          })
       }
     },
 

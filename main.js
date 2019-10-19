@@ -20,7 +20,6 @@ Vue.prototype.checkLogin = function (backpage, backtype) {
     })
     return false
   }
-  console.log('uid', uid)
 
   // #ifndef APP-PLUS
   return {

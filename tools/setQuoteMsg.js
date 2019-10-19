@@ -1,6 +1,5 @@
 // 设置回帖格式
 function setQuoteMsg(item) {
-
   if (item.isquote) {
     // 在App当中使用(?<=x)的模式会出现错误，于是暴力匹配
     // 被引用的人
@@ -12,7 +11,7 @@ function setQuoteMsg(item) {
     item.beQuoteMsg = regQuoteMsg.exec(item.message)[0]
     item.beQuoteMsg = setStr(item.beQuoteMsg, 7, 13)
 
-    // // 回复的内容
+    // 回复的内容
     const regMessage = /<\/div><\/div><\/div>[\S\s]*/
     item.message = regMessage.exec(item.message)[0]
     item.message = setStr(item.message, 18, 0)

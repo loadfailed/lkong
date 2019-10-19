@@ -1,6 +1,6 @@
 <template>
-
-  <div class="content">
+  <div class="content"
+       @click="navigateTo">
 
     <!-- <div class="dec">
       <p>
@@ -81,12 +81,21 @@ export default {
   computed: {
   },
   mounted () {
-    // console.log(this.post);
     if (this.post) {
       this.date = formaDate(this.post.sortkey)
       this.avatarUrl = getUserAvatar(this.post.uid, 'small')
     }
   },
+  methods: {
+    navigateTo () {
+      let tid = 0
+      if (this.post.tid) tid = this.post.tid
+      else tid = this.post.id.substring(7);
+      uni.navigateTo({
+        url: `/pages/thread/thread?tid=${tid}`
+      })
+    }
+  }
 }
 </script>
 

@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import formaDate from '../tools/formaDate'
+import formatDate from '../tools/formatDate'
 import getUserAvatar from '../tools/getUserAvatar';
 
 export default {
@@ -82,7 +82,7 @@ export default {
   },
   mounted () {
     if (this.post) {
-      this.date = formaDate(this.post.sortkey)
+      this.date = formatDate(this.post.sortkey)
       this.avatarUrl = getUserAvatar(this.post.uid, 'small')
     }
   },
@@ -180,7 +180,7 @@ export default {
         height: 64rpx;
         width: 64rpx;
         border-radius: 50%;
-        background: rgb(226, 114, 63);
+        background: $uni-color-primary;
       }
     }
   }

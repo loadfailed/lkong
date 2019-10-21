@@ -26,6 +26,7 @@
     </ul>
     <uniLoadMore />
 
+    <div>{{list.length}}</div>
   </div>
 </template>
 
@@ -43,7 +44,8 @@ export default {
       posts: {},
       curtime: 0,
       nexttime: 0,
-      activeTab: '信息流'
+      activeTab: '信息流',
+      lockReach: null
     }
   },
   components: {
@@ -62,13 +64,19 @@ export default {
   },
   // 上拉加载
   onReachBottom () {
-    if (this.activeTab === '信息流') this.moreIndexPosts()
-    else if (this.activeTab === '仅看主题') this.moreThreadPosts()
-    else this.getMoreAtMePosts()
+    // 防抖
+    if (!this.lockReach) {
+      clearTimeout(this.lockReach)
+      this.lockReach = setTimeout(() => {
+        if (this.activeTab === '信息流') this.moreIndexPosts()
+        else if (this.activeTab === '仅看主题') this.moreThreadPosts()
+        else this.getMoreAtMePosts()
+        this.lockReach = null
+      }, 100)
+    }
   },
 
   computed: {
-
   },
   methods: {
     // 格式化帖子

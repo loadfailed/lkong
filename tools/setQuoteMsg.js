@@ -19,8 +19,10 @@ function setQuoteMsg(item) {
   } else return item
 }
 
+// 去除正则匹配多余字符
 function setStr(str, num1, num2) {
-  const res = str.substr(num1).split('').reverse().join('').substr(num2).split('').reverse().join('')
+  let res = str.substring(num1)
+  res = res.substring(0, res.length - num2)
   return res
 }
 

@@ -1,4 +1,4 @@
-function formaDate(date) {
+function formatDate(date) {
   const oDate = new Date(date * 1000)
   const year = oDate.getFullYear()
   const month = oDate.getMonth()
@@ -19,4 +19,4 @@ function formaDate(date) {
   }
 }
 
-export default formaDate
+export default formatDate

@@ -8,7 +8,7 @@ const baseURL = 'http://111.231.114.121:5000/api'
 
 
 
-function request(url) {
+function request(url, data) {
 
   // #ifndef APP-PLUS || H5
   const dzsbhey = uni.getStorageSync('dzsbhey')
@@ -33,13 +33,17 @@ function request(url) {
   const params = {
     url,
     method: 'POST',
-    data: {}
+    data
   }
   // #endif
+  console.log(params);
   return new Promise((resolve, reject) => {
     uni.request({
       url: baseURL + params.url,
       method: params.method,
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
       data: {
         ...params.data
       },

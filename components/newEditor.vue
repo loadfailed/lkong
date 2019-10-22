@@ -46,7 +46,8 @@
                 showImgResize
                 @statuschange="onStatusChange"
                 :read-only="readOnly"
-                @ready="onEditorReady">
+                @ready="onEditorReady"
+                @input="emitInput">
         </editor>
       </view>
     </view>
@@ -117,6 +118,15 @@ export default {
           })
         }
       })
+    },
+
+    emitInput () {
+      this.editorCtx.getContents({
+        success: res => {
+          this.$emit('input', res.html)
+        }
+      })
+
     }
   },
   onLoad () {
@@ -131,7 +141,6 @@ export default {
 <style>
 @import "./editor-icon.css";
 .wrapper {
-  padding: 10rpx;
 }
 .iconfont {
   display: inline-block;
@@ -148,16 +157,15 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 0 20rpx;
-  border-radius: 10rpx;
+  border-radius: 10rpx 10rpx 0 0;
   background: #fff;
 }
 .ql-container {
   box-sizing: border-box;
   padding: 20rpx 30rpx;
   width: 100%;
-  min-height: 30vh;
-  height: auto;
-  border-radius: 10rpx;
+  height: 30vh;
+  border-radius: 0 0 10rpx 10rpx;
   background: #fff;
   font-size: 32rpx;
   line-height: 1.5;

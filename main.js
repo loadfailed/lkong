@@ -1,10 +1,18 @@
 import Vue from 'vue'
 import App from './App'
 import statusBar from './components/statusBar.vue'
+import mineButton from './components/mineButton'
+import newEditor from '@/components/newEditor'
+
+
 
 Vue.config.productionTip = false
 
 Vue.component('statusBar', statusBar)
+Vue.component('mineButton', mineButton)
+Vue.component('newEditor', newEditor)
+
+
 
 // 检查用户有没有登录
 Vue.prototype.checkLogin = function (backpage, backtype) {

@@ -11,6 +11,10 @@ const threadApi = {
   // 回帖
   sendPost(data) {
     return request(`mod=post`, data)
+  },
+  // 翻页
+  changePage(tid, page) {
+    return request(`mod=data&sars=thread/${tid}/${page}&_=${new Date().getTime()}}`)
   }
 }
 

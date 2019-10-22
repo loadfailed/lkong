@@ -108,10 +108,11 @@ export default {
       indexApi.getMoreIndexPosts(this.nexttime)
         .then(res => {
           const posts = this.setQuoteMsg(res.data)
-          for (let post of posts.reverse()) {
+          for (let post of posts) {
             this.posts.push(post)
           }
           this.nexttime = res.nexttime
+          console.log(res.nexttime);
         })
     },
 
@@ -129,11 +130,10 @@ export default {
 
     // 请求更多主题帖子列表
     moreThreadPosts () {
-      this.posts = []
       indexApi.getMoreThreadPosts(this.nexttime)
         .then(res => {
           const posts = this.setQuoteMsg(res.data)
-          for (let post of posts.reverse()) {
+          for (let post of posts) {
             this.posts.push(post)
           }
           this.nexttime = res.nexttime
@@ -171,7 +171,7 @@ export default {
       indexApi.getMoreAtMePosts(this.nexttime)
         .then(res => {
           const posts = this.setQuoteMsg(res.data)
-          for (let post of posts.reverse()) {
+          for (let post of posts) {
             this.posts.push(post)
           }
           this.nexttime = res.nexttime

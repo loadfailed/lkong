@@ -187,7 +187,7 @@ export default {
 
     // 加载更多
     getMorePosts () {
-      mineApi.getMorePosts()
+      mineApi.getMorePosts(this.nexttime)
         .then(res => {
           const posts = res.data.map(item => {
             if (item.isquote) {

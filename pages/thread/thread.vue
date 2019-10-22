@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <scroll-view scroll-y="true"
+               @scroll="test">
     <status-bar />
     <div class="title">
       <h1>{{config.subject}}</h1>
@@ -17,7 +18,8 @@
 
     <ul>
       <li v-for="(item,index) in posts"
-          :key="index">
+          :key="index"
+          @click="onFloorToReplies(item.pid,item.author)">
         <div class="header">
           <div style="display:flex;">
 
@@ -59,10 +61,15 @@
       </li>
     </ul>
 
-    <uni-pagination :total="config.replies"
-                    :pageSize="20" />
-    <new-editor />
-  </div>
+    <div style="margin:40rpx 0 40rpx;"
+         v-if="config.replies>20">
+      <uni-pagination :total="config.replies"
+                      :pageSize="20"
+                      @change="changePage" />
+    </div>
+
+    <mine-button @click="onMineButtonToReplies">回复主题</mine-button>
+  </scroll-view>
 </template>
 
 <script>
@@ -70,9 +77,6 @@
 import threadApi from '@/api/threadApi'
 import getUserAvatar from '@/tools/getUserAvatar'
 import formatThread from '@/tools/formatThread'
-
-import newEditor from '@/components/newEditor'
-
 import { uniLoadMore, uniPopup, uniPagination } from '@dcloudio/uni-ui'
 export default {
   name: 'thread',
@@ -80,17 +84,14 @@ export default {
     return {
       tid: 0,
       config: {},
-      posts: [],
-      messageValue: '',
-      editorCtx: {}
+      posts: []
 
     }
   },
   components: {
     uniLoadMore,
     uniPopup,
-    uniPagination,
-    newEditor
+    uniPagination
   },
   onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
     console.log(option); //打印出上个页面传递的参数。
@@ -100,24 +101,21 @@ export default {
   },
 
   methods: {
-    sendPost () {
-      console.log(this.messageValue);
-      // this.$refs.popup.close()
-      // const data = {
-      //   type: 'reply',
-      //   tid: this.config.tid,
-      //   myrequestid: 'thread_' + this.config.tid,
-      //   content: this.messageValue
-      // }
-      // threadApi.sendPost(data)
-      //   .then(res => {
-      //     if (res.success) {
-      //       this.messageValue = ''
-      //       this.getThread()
-      //     }
-      //   })
-    }
-    ,
+    test () {
+      console.log('done');
+    },
+    onMineButtonToReplies () {
+      let str = ''
+      this.config.subject.length > 19 ? str = this.config.subject.substring(0, 18) + '…' : str = this.config.subject
+      uni.navigateTo({
+        url: `/pages/writeReplies/writeReplies?tid=${this.config.tid}&myrequestid=thread_${this.config.tid}&title=${str}`
+      })
+    },
+    onFloorToReplies (pid, author) {
+      uni.navigateTo({
+        url: `/pages/writeReplies/writeReplies?tid=${this.config.tid}&myrequestid=post${pid}&replyid=${pid}&title=你正在回复 ${author}`
+      })
+    },
     // 获取帖子信息
     getThreadConfig () {
       threadApi.getThreadConfig(this.tid)
@@ -127,8 +125,20 @@ export default {
           }
         })
     },
+    // 获取回帖列表
     getThread () {
       threadApi.getThread(this.tid)
+        .then(res => {
+          res.data.forEach(item => {
+            item.message = formatThread(item.message)
+            item.avatarUrl = getUserAvatar(item.authorid, 'small')
+          })
+          this.posts = res.data
+        })
+    },
+    // 翻页
+    changePage (obj) {
+      threadApi.changePage(this.config.tid, obj.current)
         .then(res => {
           res.data.forEach(item => {
             item.message = formatThread(item.message)

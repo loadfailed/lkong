@@ -4,17 +4,27 @@
     <div class="nav-bar">
 
       <p :class="{activeTab:'信息流'===activeTab}"
-         @click="getIndexPosts">信息流</p>
+         @click="getIndexPosts">
+        <span>信息流</span>
+        <span class="notice"
+              v-show="newPosts"></span>
+      </p>
 
       <p :style="{color:'#ddd'}">|</p>
 
       <p :class="{activeTab:'仅看主题'===activeTab}"
-         @click="getThreadPosts">仅看主题</p>
+         @click="getThreadPosts">
+        <span>仅看主题</span>
+      </p>
 
       <p :style="{color:'#ddd'}">|</p>
 
       <p :class="{activeTab:'@我的'===activeTab}"
-         @click="getAtMePosts">@我的</p>
+         @click="getAtMePosts">
+        <span>@我的</span>
+        <span class="notice"
+              v-show="newAtme"></span>
+      </p>
 
     </div>
     <ul class="post-list">
@@ -34,7 +44,7 @@
 
 import postListCard from '../../components/postListCard'
 import indexApi from '../../api/indexApi'
-import setQuoteMsg from '../../tools/setQuoteMsg'
+import formatQuoteMsg from '../../tools/formatQuoteMsg'
 import { uniLoadMore, uniPopup } from '@dcloudio/uni-ui'
 
 
@@ -45,7 +55,13 @@ export default {
       curtime: 0,
       nexttime: 0,
       activeTab: '信息流',
-      lockReach: null
+
+      lockReach: null,
+
+      interval: null,
+
+      newAtme: 0,
+      newPosts: 0
     }
   },
   components: {
@@ -54,6 +70,15 @@ export default {
   },
   onLoad () {
     this.indexPosts()
+    // 定时检查是否有新的信息流
+    this.interval = setInterval(() => {
+      this.checkReNew()
+    }, 30 * 1000)
+    // 定时检查是否有新的Atme
+    this.langloop()
+    this.interval = setInterval(() => {
+      this.langloop()
+    }, 60 * 1000)
   },
   // 下拉刷新
   onPullDownRefresh () {
@@ -76,17 +101,18 @@ export default {
     }
   },
 
+  beforeDestroy () {
+    clearInterval(this.interval)
+    this.newAtme = false
+  },
+
   computed: {
   },
   methods: {
     // 格式化帖子
-    setQuoteMsg (list) {
+    formatQuoteMsg (list) {
       const posts = list.map(item => {
-        if (item.isquote) {
-          return setQuoteMsg(item)
-        } else {
-          return item
-        }
+        return formatQuoteMsg(item)
       })
       return posts.reverse()
     },
@@ -94,9 +120,10 @@ export default {
     // 请求信息流
     indexPosts () {
       this.posts = []
+      this.newPosts = 0
       indexApi.getIndexPosts()
         .then(res => {
-          this.posts = this.setQuoteMsg(res.data)
+          this.posts = this.formatQuoteMsg(res.data)
           this.curtime = res.curtime
           this.nexttime = res.nexttime
         })
@@ -107,12 +134,27 @@ export default {
     moreIndexPosts () {
       indexApi.getMoreIndexPosts(this.nexttime)
         .then(res => {
-          const posts = this.setQuoteMsg(res.data)
+          const posts = this.formatQuoteMsg(res.data)
           for (let post of posts) {
             this.posts.push(post)
           }
           this.nexttime = res.nexttime
-          console.log(res.nexttime);
+        })
+    },
+
+    // 检查是否有新的信息流
+    checkReNew () {
+      indexApi.checkReNew(this.curtime)
+        .then(res => {
+          this.newPosts = res
+        })
+    },
+
+    // 检查是否有新的atme
+    langloop () {
+      indexApi.langloop(this.curtime)
+        .then(res => {
+          this.newAtme = res.notice.atme
         })
     },
 
@@ -122,7 +164,7 @@ export default {
       this.posts = []
       indexApi.getThreadPosts()
         .then(res => {
-          this.posts = this.setQuoteMsg(res.data)
+          this.posts = this.formatQuoteMsg(res.data)
           this.curtime = res.curtime
           this.nexttime = res.nexttime
         })
@@ -132,7 +174,7 @@ export default {
     moreThreadPosts () {
       indexApi.getMoreThreadPosts(this.nexttime)
         .then(res => {
-          const posts = this.setQuoteMsg(res.data)
+          const posts = this.formatQuoteMsg(res.data)
           for (let post of posts) {
             this.posts.push(post)
           }
@@ -159,9 +201,10 @@ export default {
     getAtMePosts () {
       this.activeTab = '@我的'
       this.posts = []
+      this.newAtme = 0
       indexApi.getAtMePosts()
         .then(res => {
-          this.posts = this.setQuoteMsg(res.data)
+          this.posts = this.formatQuoteMsg(res.data)
           this.nexttime = res.nexttime
         })
     },
@@ -170,7 +213,7 @@ export default {
     getMoreAtMePosts () {
       indexApi.getMoreAtMePosts(this.nexttime)
         .then(res => {
-          const posts = this.setQuoteMsg(res.data)
+          const posts = this.formatQuoteMsg(res.data)
           for (let post of posts) {
             this.posts.push(post)
           }
@@ -210,6 +253,14 @@ export default {
     padding: 20rpx;
     text-align: center;
     font-size: 30rpx;
+    position: relative;
+    .notice::after {
+      content: "●";
+      font-size: 14rpx;
+      color: #fff;
+      position: absolute;
+      margin: 6rpx 10rpx;
+    }
   }
   .activeTab {
     color: #fff;

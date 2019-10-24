@@ -85,7 +85,7 @@
 
 <script>
 
-import setQuoteMsg from '../../tools/setQuoteMsg'
+import formatQuoteMsg from '../../tools/formatQuoteMsg'
 import getUserAvatar from '../../tools/getUserAvatar';
 
 import PostListCard from '../../components/postListCard';
@@ -150,6 +150,13 @@ export default {
   computed: {
   },
   methods: {
+    // 格式化帖子
+    formatQuoteMsg (list) {
+      const posts = list.map(item => {
+        return formatQuoteMsg(item)
+      })
+      return posts.reverse()
+    },
     // 获取用户信息
     getUserInfo () {
       mineApi.getUserInfo()
@@ -171,13 +178,7 @@ export default {
       this.posts = []
       mineApi.getUserPosts(uid)
         .then(res => {
-          const posts = res.data.map(item => {
-            if (item.isquote) {
-              return setQuoteMsg(item)
-            } else {
-              return item
-            }
-          })
+          const posts = this.formatQuoteMsg(res.data)
           this.curtime = res.curtime
           this.nexttime = res.nexttime
           this.posts = posts.reverse()
@@ -189,13 +190,7 @@ export default {
     getMorePosts () {
       mineApi.getMorePosts(this.nexttime)
         .then(res => {
-          const posts = res.data.map(item => {
-            if (item.isquote) {
-              return setQuoteMsg(item)
-            } else {
-              return item
-            }
-          })
+          const posts = this.formatQuoteMsg(res.data)
           for (let post of posts.reverse()) {
             this.posts.push(post)
           }
@@ -214,7 +209,6 @@ export default {
       } else {
         mineApi.getPunch()
           .then(res => {
-            console.log(res);
             this.user.punchday = res.punchday
             this.user.isPunch = true
           })

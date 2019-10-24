@@ -10,7 +10,7 @@ const threadApi = {
   },
   // 回帖
   sendPost(data) {
-    return request(`mod=post`, data)
+    return request(`mod=post`, data, 'POST')
   },
   // 翻页
   changePage(tid, page) {

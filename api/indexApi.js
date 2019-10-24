@@ -24,6 +24,14 @@ const indexApi = {
   // 请求更多主题
   getMoreThreadPosts(nexttime) {
     return request(`mod=data&sars=index/thread&nexttime=${nexttime}&_=${new Date().getTime()}`)
+  },
+  // 定时请求是否有新的信息流
+  checkReNew(curtime) {
+    return request(`mod=data&checkrenew=1&sars=index/&curtime=${curtime}&_=${new Date().getTime()}`)
+  },
+  // 定时请求是否有更新的信息
+  langloop() {
+    return request(`mod=ajax&action=langloop&_=${new Date().getTime()}`)
   }
 }
 export default indexApi

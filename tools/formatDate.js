@@ -15,8 +15,6 @@ function formatDate(date) {
   } else if (tempTime <= 24 * 60 * 60 * 1000) {
     return `${Math.floor(tempTime/60/60/1000)} 小时前`
   } else {
-    // if (hour * 1 < 10) hour = '0' + hour
-    console.log(minutes < 10);
     let nHour = '0'
     hour < 10 ? nHour = nHour + hour : nHour = hour
     let nMinutes = '0'

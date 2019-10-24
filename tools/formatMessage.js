@@ -1,6 +1,13 @@
-function formatThread(message) {
+function formatMessage(message) {
 
   const post = {}
+
+  // 去除正则匹配多余字符
+  function setStr(str, num1, num2) {
+    let res = str.substring(num1)
+    res = res.substring(0, res.length - num2)
+    return res
+  }
 
   // 修改插图的比例
   const regImgUrl = /<img/gi
@@ -34,11 +41,6 @@ function formatThread(message) {
 
 }
 
-// 去除正则匹配多余字符
-function setStr(str, num1, num2) {
-  let res = str.substring(num1)
-  res = res.substring(0, res.length - num2)
-  return res
-}
 
-export default formatThread
+
+export default formatMessage

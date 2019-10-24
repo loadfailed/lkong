@@ -1,5 +1,11 @@
 // 设置回帖格式
-function setQuoteMsg(item) {
+function formatQuoteMsg(item) {
+  // 修改插图的比例
+  const regImgUrl = /<img/gi
+  if (regImgUrl.test(item.message)) {
+    item.message = item.message.replace(regImgUrl, '<img style="max-width:100%"')
+  }
+  // 提取回帖
   if (item.isquote) {
     // 在App当中使用(?<=x)的模式会出现错误，于是暴力匹配
     // 被引用的人
@@ -26,4 +32,4 @@ function setStr(str, num1, num2) {
   return res
 }
 
-export default setQuoteMsg
+export default formatQuoteMsg

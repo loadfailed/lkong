@@ -86,7 +86,7 @@
 <script>
 
 import formatQuoteMsg from '../../tools/formatQuoteMsg'
-import getUserAvatar from '../../tools/getUserAvatar';
+import getAvatarUrl from '../../tools/getAvatarUrl';
 
 import PostListCard from '../../components/postListCard';
 
@@ -134,7 +134,7 @@ export default {
     for (let i in user) {
       this.user[i] = user[i]
     }
-    this.user.avatarUrl = getUserAvatar(this.user.uid, 'middle')
+    this.user.avatarUrl = getAvatarUrl('avatar', this.user.uid, 'middle')
     this.getUserInfo()
     this.getUserPosts(user.uid)
   },
@@ -164,6 +164,10 @@ export default {
           for (let key in res) {
             this.user[key] = res[key]
           }
+          // 修改storage中的数据
+          uni.setStorageSync('name', res.name)
+          uni.setStorageSync('uid', res.uid)
+
           const punchtime = res.punchtime * 1000
           const year = new Date().getFullYear()
           const month = new Date().getMonth()
@@ -181,7 +185,7 @@ export default {
           const posts = this.formatQuoteMsg(res.data)
           this.curtime = res.curtime
           this.nexttime = res.nexttime
-          this.posts = posts.reverse()
+          this.posts = posts
           // console.log('请求所有发帖', this.posts)
         })
     },
@@ -191,7 +195,7 @@ export default {
       mineApi.getMorePosts(this.nexttime)
         .then(res => {
           const posts = this.formatQuoteMsg(res.data)
-          for (let post of posts.reverse()) {
+          for (let post of posts) {
             this.posts.push(post)
           }
           // console.log('请求加载更多', posts)
@@ -326,7 +330,6 @@ $light-color: #b1d5e2;
   text-align: center;
   color: $uni-text-color-grey;
   margin: 20rpx auto 0;
-  border-radius: 20rpx 20rpx 0 0;
 }
 
 .post-list {

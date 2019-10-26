@@ -7,7 +7,7 @@ function formatQuoteMsg(item) {
   }
   // 提取回帖
   if (item.isquote) {
-    // 在App当中使用(?<=x)的模式会出现错误，于是暴力匹配
+    // 在App当中使用(?<=x)的模式好像会出BUG，于是暴力匹配
     // 被引用的人
     const regQuoteUser = /">@\S*<\/a/
     item.beQuoteUser = regQuoteUser.exec(item.message)[0]

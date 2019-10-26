@@ -32,6 +32,7 @@ const indexApi = {
   // 定时请求是否有更新的信息
   langloop() {
     return request(`mod=ajax&action=langloop&_=${new Date().getTime()}`)
-  }
+  },
+
 }
 export default indexApi

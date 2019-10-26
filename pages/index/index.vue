@@ -42,10 +42,14 @@
 
 <script>
 
-import postListCard from '../../components/postListCard'
+
 import indexApi from '../../api/indexApi'
-import formatQuoteMsg from '../../tools/formatQuoteMsg'
+import commonApi from '../../api/commonApi'
+
+import postListCard from '../../components/postListCard'
 import { uniLoadMore, uniPopup } from '@dcloudio/uni-ui'
+
+import formatQuoteMsg from '../../tools/formatQuoteMsg'
 
 
 export default {
@@ -58,7 +62,8 @@ export default {
 
       lockReach: null,
 
-      interval: null,
+      crnInterval: null,
+      llInterval: null,
 
       newAtme: 0,
       newPosts: 0
@@ -69,14 +74,15 @@ export default {
     uniLoadMore
   },
   onLoad () {
+    this.checkLogin('/pages/index/index', 2)
     this.indexPosts()
     // 定时检查是否有新的信息流
-    this.interval = setInterval(() => {
+    this.crnInterval = setInterval(() => {
       this.checkReNew()
     }, 30 * 1000)
     // 定时检查是否有新的Atme
     this.langloop()
-    this.interval = setInterval(() => {
+    this.llInterval = setInterval(() => {
       this.langloop()
     }, 60 * 1000)
   },
@@ -102,8 +108,8 @@ export default {
   },
 
   beforeDestroy () {
-    clearInterval(this.interval)
-    this.newAtme = false
+    // clearInterval(this.interval)
+    // this.newAtme = 0
   },
 
   computed: {
@@ -218,6 +224,21 @@ export default {
             this.posts.push(post)
           }
           this.nexttime = res.nexttime
+        })
+    },
+
+    // 获取关注版面列表
+    getFollowForum () {
+      commonApi.followForum()
+        .then(res => {
+          // 检查是否被关注
+          for (let i of this.forumlist) {
+            i.isFollow = res.fid.includes(i.fid + '')
+          }
+          for (let i of this.sysweimian) {
+            i.isFollow = res.fid.includes(i.fid + '')
+          }
+          uni.setStorageSync('fid', res.fid)
         })
     }
 

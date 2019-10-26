@@ -15,7 +15,7 @@ function request(url, data, method = 'GET') {
   const auth = uni.getStorageSync('auth')
   if (!dzsbhey && !auth) {
     uni.redirectTo({
-      url: '../login/login?backpage=' + backpage + '&backtype=' + backtype
+      url: '../login/login?backpage=/pages/index/index&backtype=2'
     })
   }
   const params = {

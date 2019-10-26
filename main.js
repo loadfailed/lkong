@@ -3,8 +3,9 @@ import App from './App'
 import statusBar from './components/statusBar.vue'
 import mineButton from './components/mineButton'
 import newEditor from '@/components/newEditor'
+import store from './store'
 
-
+Vue.prototype.$store = store;
 
 Vue.config.productionTip = false
 

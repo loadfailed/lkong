@@ -61,7 +61,7 @@
 
 <script>
 import formatDate from '../tools/formatDate'
-import getUserAvatar from '../tools/getUserAvatar';
+import getAvatarUrl from '../tools/getAvatarUrl';
 
 export default {
   data () {
@@ -83,7 +83,7 @@ export default {
   mounted () {
     if (this.post) {
       this.date = formatDate(this.post.sortkey)
-      this.avatarUrl = getUserAvatar(this.post.uid, 'small')
+      this.avatarUrl = getAvatarUrl('avatar', this.post.uid, 'small')
     }
   },
   methods: {

@@ -8,7 +8,7 @@
 
     }
   }, {
-    "path": "pages/write/write",
+    "path": "pages/forum/forum",
     "style": {
       "navigationBarTitleText": ""
     }
@@ -49,8 +49,8 @@
       "pagePath": "pages/index/index",
       "text": "信息流"
     }, {
-      "pagePath": "pages/write/write",
-      "text": "板块"
+      "pagePath": "pages/forum/forum",
+      "text": "版块"
     }, {
       "pagePath": "pages/mine/mine",
       "text": "我的"

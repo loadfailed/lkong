@@ -38,6 +38,8 @@
 </template>
 
 <script>
+
+import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -89,11 +91,13 @@ export default {
         },
         data: userData,
         success: res => {
+
           if (res.data.success) {
             // #ifndef APP-PLUS
             uni.setStorageSync('dzsbhey', res.cookies[0].split(';')[0].replace('dzsbhey=', ''))
             uni.setStorageSync('auth', res.cookies[1].split(';')[0].replace('auth=', ''))
             // #endif
+            // 保存到storage
             uni.setStorageSync('name', res.data.name)
             uni.setStorageSync('uid', res.data.uid)
             uni.setStorageSync('yousuu', res.data.yousuu)

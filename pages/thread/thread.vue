@@ -75,7 +75,7 @@
 <script>
 
 import threadApi from '@/api/threadApi'
-import getUserAvatar from '@/tools/getUserAvatar'
+import getAvatarUrl from '@/tools/getAvatarUrl'
 import formatMessage from '@/tools/formatMessage'
 import { uniLoadMore, uniPopup, uniPagination } from '@dcloudio/uni-ui'
 export default {
@@ -131,7 +131,7 @@ export default {
         .then(res => {
           res.data.forEach(item => {
             item.message = formatMessage(item.message)
-            item.avatarUrl = getUserAvatar(item.authorid, 'small')
+            item.avatarUrl = getAvatarUrl('avatar', item.authorid, 'small')
           })
           this.posts = res.data
         })
@@ -142,7 +142,7 @@ export default {
         .then(res => {
           res.data.forEach(item => {
             item.message = formatMessage(item.message)
-            item.avatarUrl = getUserAvatar(item.authorid, 'small')
+            item.avatarUrl = getAvatarUrl('avatar', item.authorid, 'small')
           })
           this.posts = res.data
         })

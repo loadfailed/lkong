@@ -22,4 +22,7 @@ page {
   background: #f6f6f6;
   font-size: 32rpx;
 }
+:not(not) {
+  box-sizing: border-box;
+}
 </style>

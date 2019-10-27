@@ -5,6 +5,7 @@ const forumApi = {
   // 获取版块列表
   forumList() {
     return request(`mod=ajax&action=forumlist&_=${new Date().getTime()}`)
-  }
+  },
+
 }
 export default forumApi

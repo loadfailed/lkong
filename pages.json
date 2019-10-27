@@ -8,7 +8,7 @@
 
     }
   }, {
-    "path": "pages/forum/forum",
+    "path": "pages/forumList/forumList",
     "style": {
       "navigationBarTitleText": ""
     }
@@ -29,7 +29,11 @@
   }, {
     "path": "pages/writeReplies/writeReplies",
     "style": {}
+  }, {
+    "path": "pages/forum/forum",
+    "style": {}
   }],
+
   "globalStyle": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "",
@@ -39,9 +43,9 @@
     "app-plus": {
       "softinputNavBar": "none"
     }
-
-
   },
+
+
   "tabBar": {
     "color": "#707070",
     "selectedColor": "#DE533A",
@@ -49,7 +53,7 @@
       "pagePath": "pages/index/index",
       "text": "信息流"
     }, {
-      "pagePath": "pages/forum/forum",
+      "pagePath": "pages/forumList/forumList",
       "text": "版块"
     }, {
       "pagePath": "pages/mine/mine",

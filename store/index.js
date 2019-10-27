@@ -5,13 +5,14 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 
   state: {
-    user: {}
+    followlist: {}
   },
 
   mutations: {
 
-    SET_USER(state, user) {
-      state.user = user;
+    SET_FOLLOWFID(state, followlist) {
+      console.log('vuex', state.followlist)
+      state.followlist = followlist
     }
   }
 

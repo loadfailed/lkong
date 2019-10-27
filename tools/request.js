@@ -36,7 +36,6 @@ function request(url, data, method = 'GET') {
     data
   }
   // #endif
-  console.log(params);
   return new Promise((resolve, reject) => {
     uni.request({
       url: baseURL + params.url,

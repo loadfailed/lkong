@@ -165,8 +165,7 @@ export default {
             this.user[key] = res[key]
           }
           // 修改storage中的数据
-          uni.setStorageSync('name', res.name)
-          uni.setStorageSync('uid', res.uid)
+          uni.setStorageSync('name', res.username)
 
           const punchtime = res.punchtime * 1000
           const year = new Date().getFullYear()

@@ -76,6 +76,9 @@ export default {
   onLoad () {
     this.checkLogin('/pages/index/index', 2)
     this.indexPosts()
+
+  },
+  onShow () {
     // 定时检查是否有新的信息流
     this.crnInterval = setInterval(() => {
       this.checkReNew()
@@ -85,6 +88,11 @@ export default {
     this.llInterval = setInterval(() => {
       this.langloop()
     }, 60 * 1000)
+  },
+  onHide () {
+    clearInterval(this.crnInterval)
+    clearInterval(this.llInterval)
+    console.log(clearInterval);
   },
   // 下拉刷新
   onPullDownRefresh () {
@@ -108,8 +116,8 @@ export default {
   },
 
   beforeDestroy () {
-    // clearInterval(this.interval)
-    // this.newAtme = 0
+    clearInterval(this.crnInterval)
+    clearInterval(this.llInterval)
   },
 
   computed: {

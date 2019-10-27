@@ -6,6 +6,13 @@ const forumApi = {
   forumList() {
     return request(`mod=ajax&action=forumlist&_=${new Date().getTime()}`)
   },
-
+  // 获取版面信息
+  forumConfig(fid) {
+    return request(`mod=ajax&action=forumconfig_${fid}&_=${new Date().getTime()}`)
+  },
+  // 获取版面的发帖列表
+  forumPosts(fid) {
+    return request(`mod=data&sars=forum/${fid}&_=${new Date().getTime()}`)
+  },
 }
 export default forumApi

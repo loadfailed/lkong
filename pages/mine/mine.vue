@@ -49,7 +49,7 @@
            @click="userPunch">
         <p v-if="user.isPunch">
           <span>已连续签到</span>
-          <span style="font-weight:bold;padding:0 10rpx;">{{user.punchday}}</span>
+          <span style="font-weight:bold;padding:0 12rpx;">{{user.punchday}}</span>
           <span>天</span>
         </p>
         <p v-if="!user.isPunch">今天还没有签到，立即签到</p>
@@ -252,7 +252,7 @@ $light-color: #b1d5e2;
 .header {
   padding: 100rpx 20rpx 20rpx;
   overflow: hidden;
-  background: linear-gradient(to bottom right, #09c, #106a7d);
+  background: linear-gradient(to bottom right, $uni-color-primary, #106a7d);
   border-radius: 0 0 50% 50%/0 0 40rpx 40rpx;
 
   .image-content {
@@ -310,14 +310,14 @@ $light-color: #b1d5e2;
 
   .punch {
     width: 100%;
-    height: 110rpx;
-    border-radius: 10rpx;
+    height: 112rpx;
+    border-radius: 12rpx;
     margin: 20rpx auto -40rpx;
     background: #47cd75;
     font-size: 28rpx;
     color: #fff;
     text-align: center;
-    line-height: 110rpx;
+    line-height: 112rpx;
   }
 }
 
@@ -337,7 +337,7 @@ $light-color: #b1d5e2;
   li {
     margin: 40rpx 0rpx;
     padding: 20rpx 40rpx 30rpx;
-    border-radius: 10rpx;
+    border-radius: 12rpx;
     background: #fff;
   }
 }

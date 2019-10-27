@@ -260,10 +260,8 @@ export default {
   border-radius: 30rpx;
   margin-top: 120rpx;
   li {
+    @include main-layout;
     margin: 40rpx 0rpx;
-    padding: 20rpx 40rpx 30rpx;
-    border-radius: 10rpx;
-    background: #fff;
   }
 }
 
@@ -273,11 +271,11 @@ export default {
   padding: 0 20rpx;
   // justify-content: center;
   align-items: center;
-  background: #09c;
+  background: $uni-color-primary;
   color: #ddd;
   position: fixed;
   z-index: 998;
-  box-shadow: 0 0 4rpx 4rpx rgba(#333, 0.5);
+  box-shadow: 0 0 4rpx 4rpx rgba($uni-text-color, 0.5);
   p {
     padding: 20rpx;
     text-align: center;
@@ -288,7 +286,7 @@ export default {
       font-size: 14rpx;
       color: #fff;
       position: absolute;
-      margin: 6rpx 10rpx;
+      margin: 6rpx 12rpx;
     }
   }
   .activeTab {

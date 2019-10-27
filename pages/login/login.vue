@@ -147,7 +147,7 @@ export default {
       position: relative;
       .input-icon {
         font-size: 48rpx;
-        color: #333;
+        color: $uni-text-color;
         position: absolute;
         top: 50%;
         left: 50%;

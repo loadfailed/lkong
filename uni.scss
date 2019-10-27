@@ -15,7 +15,7 @@
 /* 颜色变量 */
 
 /* 行为相关颜色 */
-$uni-color-primary: #14BEDD;
+$uni-color-primary: #0099cc;
 $uni-color-success: #4cd964;
 $uni-color-warning: #f0ad4e;
 $uni-color-error: #dd524d;
@@ -28,8 +28,8 @@ $uni-text-color-placeholder: #808080;
 $uni-text-color-disable:#c0c0c0;
 
 /* 背景颜色 */
-$uni-bg-color:#ffffff;
-$uni-bg-color-grey:#f6fbff;
+$uni-bg-color:#e5f6fb;
+$uni-bg-color-grey:#eeeeee;
 $uni-bg-color-hover:#f1f1f1; //点击状态颜色
 $uni-bg-color-mask:rgba(0, 0, 0, 0.4); //遮罩颜色
 
@@ -156,4 +156,10 @@ $uni-font-size-paragraph:30upx;
       transform: scale(0.3333);
     }
   }
+}
+
+@mixin main-layout {
+  padding: 40rpx;
+  border-radius: 12rpx;
+  background: #fff;
 }

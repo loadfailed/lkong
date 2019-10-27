@@ -29,10 +29,10 @@
 
 <style lang="scss" scoped>
 .quote {
-  background: #e5f6fb;
+  background: $uni-bg-color;
   padding: 20rpx;
   margin: 0 -20rpx;
-  border-radius: 10rpx;
+  border-radius: 12rpx;
   line-height: 50rpx;
 
   .header-line {
@@ -51,15 +51,15 @@
 
   .context {
     margin-top: 5rpx;
-    color: #333;
+    color: $uni-text-color;
   }
 
   .thread-title {
-    color: #333;
+    color: $uni-text-color;
     font-weight: bold;
     .form-icon {
       font-family: "iconfont";
-      padding: 0 10rpx;
+      padding: 0 12rpx;
     }
   }
 }

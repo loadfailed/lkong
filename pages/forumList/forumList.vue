@@ -7,7 +7,8 @@
     <ul class="forumlist">
       <li v-for="(item ,index) in forumlist"
           :key="index"
-          :class="{isFollow:item.isFollow}">
+          :class="{isFollow:item.isFollow}"
+          @click="navigateToForum(item)">
         <image class="forum-avatar"
                :mode="aspectFit"
                :src="item.avatarUrl"></image>
@@ -42,6 +43,7 @@ import forumApi from '@/api/forumApi'
 import commonApi from '@/api/commonApi'
 import getAvatarUrl from '@/tools/getAvatarUrl';
 export default {
+  name: 'forumList',
   data () {
     return {
       forumlist: [],
@@ -79,6 +81,7 @@ export default {
           this.getFollowForum()
         })
     },
+    // 获取关注列表
     getFollowForum () {
       commonApi.followForum()
         .then(res => {
@@ -91,6 +94,12 @@ export default {
           }
           this.SET_FOLLOWFID(res)
         })
+    },
+    // 路由跳转
+    navigateToForum (item) {
+      uni.navigateTo({
+        url: `/pages/forum/forum?fid=${item.fid}&name=${item.name}&avatarUrl=${encodeURIComponent(JSON.stringify(item.avatarUrl))}`
+      })
     }
   }
 }
@@ -136,8 +145,8 @@ export default {
     }
   }
   .isFollow {
-    color: #333;
-    background: #d8edfd;
+    color: $uni-text-color;
+    background: $uni-bg-color;
   }
 }
 </style>

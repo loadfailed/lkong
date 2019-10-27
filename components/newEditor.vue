@@ -144,7 +144,7 @@ export default {
 }
 .iconfont {
   display: inline-block;
-  padding: 20rpx 10rpx;
+  padding: 20rpx 12rpx;
   width: 48rpx;
   height: 48rpx;
   cursor: pointer;
@@ -157,7 +157,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 0 20rpx;
-  border-radius: 10rpx 10rpx 0 0;
+  border-radius: 12rpx 12rpx 0 0;
   background: #fff;
 }
 .ql-container {
@@ -165,12 +165,12 @@ export default {
   padding: 20rpx 30rpx;
   width: 100%;
   height: 30vh;
-  border-radius: 0 0 10rpx 10rpx;
+  border-radius: 0 0 12rpx 12rpx;
   background: #fff;
   font-size: 32rpx;
   line-height: 1.5;
 }
 .ql-active {
-  color: #09c;
+  color: $uni-color-primary;
 }
 </style>

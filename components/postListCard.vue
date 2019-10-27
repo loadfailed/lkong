@@ -47,7 +47,7 @@
           <image class="mine-avatar"
                  :mode="aspectFit"
                  :src="avatarUrl"></image>
-          <p :style="{lineHeight:'48rpx',paddingLeft:'10rpx'}">{{post.username}}</p>
+          <p :style="{lineHeight:'48rpx',paddingLeft:'12rpx'}">{{post.username}}</p>
         </div>
 
         <p>{{date}}</p>
@@ -126,10 +126,10 @@ export default {
   }
 
   .quote {
-    background: #e5f6fb;
+    background: $uni-bg-color;
     padding: 20rpx;
     margin: 0 -20rpx;
-    border-radius: 10rpx;
+    border-radius: 12rpx;
     line-height: 50rpx;
 
     .header-line {
@@ -152,7 +152,7 @@ export default {
     }
 
     .thread-title {
-      color: #333;
+      color: $uni-text-color;
       font-size: 34rpx;
       line-height: 60rpx;
       font-weight: bold;

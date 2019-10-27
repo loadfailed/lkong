@@ -23,7 +23,7 @@ export default {
   background: #fff;
   margin: 0rpx;
   height: 100rpx;
-  color: #333;
+  color: $uni-text-color;
   font-size: 30rpx;
   display: flex;
   align-items: center;
@@ -34,7 +34,7 @@ export default {
     font-family: "iconfont";
     font-size: 40rpx;
     color: #999;
-    padding: 0 10rpx;
+    padding: 0 12rpx;
   }
 }
 </style>

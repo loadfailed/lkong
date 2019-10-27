@@ -8,7 +8,7 @@
         <p>
           <span>查看：</span>
           <span>{{config.views}}</span>
-          <span style="padding:0 10rpx;color:#ddd;">|</span>
+          <span style="padding:0 12rpx;color:#ddd;">|</span>
           <span>回复：</span>
           <span>{{config.replies}}</span>
         </p>
@@ -28,7 +28,7 @@
                    :src="`${item.avatarUrl}`">
             </image>
             <div>
-              <p style="color:#333;">{{item.author}}</p>
+              <p style="color:$uni-text-color;">{{item.author}}</p>
               <p style="font-size:26rpx;">{{item.dateline}}</p>
             </div>
           </div>
@@ -158,7 +158,7 @@ export default {
   h1 {
     font-size: 38rpx;
     padding: 40rpx 20rpx 20rpx;
-    color: #333;
+    color: $uni-text-color;
   }
   .digest {
     color: #999;
@@ -172,11 +172,11 @@ li {
   margin: 30rpx 0;
   padding: 40rpx 20rpx;
   background: #fff;
-  border-radius: 10rpx;
+  border-radius: 12rpx;
 
   .header {
-    padding: 10rpx 0 30rpx;
-    border-bottom: 1rpx solid #eee;
+    padding: 12rpx 0 30rpx;
+    border-bottom: 1rpx solid $uni-bg-color-grey;
     margin-bottom: 20rpx;
     display: flex;
     color: #999;
@@ -185,22 +185,22 @@ li {
       width: 80rpx;
       height: 80rpx;
       border-radius: 50%;
-      margin-right: 10rpx;
+      margin-right: 12rpx;
       background: $uni-color-primary;
     }
   }
 
   .quote {
-    background: #e5f6fb;
+    background: $uni-bg-color;
     padding: 20rpx;
-    border-radius: 10rpx;
+    border-radius: 12rpx;
     color: #666;
     font-size: 28rpx;
     .header-line {
       display: flex;
       justify-content: space-between;
       color: $uni-text-color-grey;
-      padding: 10rpx;
+      padding: 12rpx;
       .user-icon {
         font-family: "iconfont";
         padding: 0 6rpx;
@@ -212,7 +212,7 @@ li {
 .input {
   width: 700rpx;
   height: 400rpx;
-  border-radius: 10rpx;
+  border-radius: 12rpx;
   padding: 20rpx;
   background: #fff;
 }

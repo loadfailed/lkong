@@ -159,7 +159,24 @@ $uni-font-size-paragraph:30upx;
 }
 
 @mixin main-layout {
-  padding: 40rpx;
+  padding: 32rpx 20rpx;
+  margin: 20rpx 10rpx;
   border-radius: 12rpx;
   background: #fff;
+  box-shadow: 0 0 2rpx 4rpx rgba($uni-text-color, 0.1);
+}
+
+@mixin avatar {
+  border-radius: 50%;
+  background: $uni-color-primary;
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 12rpx;
+}
+
+@mixin userInfo {
+  font-size: 30rpx;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  color: $uni-text-color-grey;
 }

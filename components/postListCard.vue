@@ -12,16 +12,16 @@
 
     <div class="quote">
 
-      <div class="header-line">
+      <div class="header__line">
 
-        <p class="thread-title">
-          <span class="icon-font icon-form form-icon"></span>
+        <p class="thread__title">
+          <span class="icon-font icon-form form__icon"></span>
           <span>{{post.subject}}</span>
         </p>
 
         <p class="user"
            v-if="post.beQuoteUser">
-          <span class="icon-font icon-user user-icon"></span>
+          <span class="icon-font icon-user user__icon"></span>
           <span>{{post.beQuoteUser}}</span>
         </p>
 
@@ -127,19 +127,19 @@ export default {
 
   .quote {
     background: $uni-bg-color;
-    padding: 20rpx;
-    margin: 0 -20rpx;
+    padding: 10rpx;
+    margin: 0 -10rpx;
     border-radius: 12rpx;
     line-height: 50rpx;
 
-    .header-line {
+    .header__line {
       color: $uni-text-color-grey;
       line-height: 40rpx;
       .user {
         padding-top: 20rpx;
         margin-top: 20rpx;
         @include thinBorder((top), #cbe7f0);
-        .user-icon {
+        .user__icon {
           font-family: "iconfont";
           padding: 0 6rpx;
         }
@@ -151,12 +151,12 @@ export default {
       color: #666;
     }
 
-    .thread-title {
+    .thread__title {
       color: $uni-text-color;
-      font-size: 34rpx;
+      font-size: 32rpx;
       line-height: 60rpx;
       font-weight: bold;
-      .form-icon {
+      .form__icon {
         font-family: "iconfont";
         color: rgb(226, 114, 63);
         padding: 0 20rpx;
@@ -167,20 +167,15 @@ export default {
   .reply {
     padding: 30rpx 0 0;
     .context {
-      font-size: 34rpx;
+      font-size: 32rpx;
       letter-spacing: 2rpx;
     }
 
     .dec {
-      font-size: 30rpx;
-      margin-top: 20rpx;
-      color: $uni-text-color-grey;
-
+      @include thinBorder((top), $uni-bg-color-grey);
+      @include userInfo;
       .mine-avatar {
-        height: 64rpx;
-        width: 64rpx;
-        border-radius: 50%;
-        background: $uni-color-primary;
+        @include avatar;
       }
     }
   }

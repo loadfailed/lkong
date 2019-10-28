@@ -261,7 +261,6 @@ export default {
   margin-top: 120rpx;
   li {
     @include main-layout;
-    margin: 40rpx 0rpx;
   }
 }
 

@@ -2,9 +2,9 @@
   <div v-if="!isClearStorage">
     <div class="header">
 
-      <div class="image-content">
+      <div class="image__content">
         <div class="user">
-          <image class="mine-avatar"
+          <image class="mine__avatar"
                  :mode="aspectFit"
                  :src="user.avatarUrl">
           </image>
@@ -26,7 +26,7 @@
              @click="openPopup"></div>
       </div>
 
-      <div class="user-info">
+      <div class="user__info">
         <div>
           <p class="num">{{user.fansnum}}</p>
           <p>粉丝列表</p>
@@ -57,9 +57,9 @@
 
     </div>
 
-    <div class="post-title">{{user.posts?'- - 我的动态 - -':'- - 暂无动态 - -'}}</div>
+    <div class="post__title">{{user.posts?'- - 我的动态 - -':'- - 暂无动态 - -'}}</div>
 
-    <div class="post-list"
+    <div class="post__list"
          v-if="user.posts">
       <ul>
         <li v-for="(post,index) in posts"
@@ -255,18 +255,17 @@ $light-color: #b1d5e2;
   background: linear-gradient(to bottom right, $uni-color-primary, #106a7d);
   border-radius: 0 0 50% 50%/0 0 40rpx 40rpx;
 
-  .image-content {
+  .image__content {
     display: flex;
     justify-content: space-between;
     .user {
       display: flex;
       margin: 0 20rpx;
-      .mine-avatar {
+      .mine__avatar {
+        @include avatar;
         height: 120rpx;
         width: 120rpx;
         border: 1rpx solid #fff;
-        border-radius: 50%;
-        background: $light-color;
       }
       p {
         line-height: 80rpx;
@@ -289,7 +288,7 @@ $light-color: #b1d5e2;
       padding: 0 30rpx;
     }
   }
-  .user-info {
+  .user__info {
     display: flex;
     margin: 30rpx -40rpx;
     div {
@@ -321,7 +320,7 @@ $light-color: #b1d5e2;
   }
 }
 
-.post-title {
+.post__title {
   width: 92%;
   height: 80rpx;
   font-size: 32rpx;
@@ -331,7 +330,7 @@ $light-color: #b1d5e2;
   margin: 20rpx auto 0;
 }
 
-.post-list {
+.post__list {
   border-radius: 30rpx;
   margin-top: -40rpx;
   li {

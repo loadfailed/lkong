@@ -36,11 +36,27 @@
             class="item">{{moderator}}</span>
     </div>
 
-    <ul>
-      <li v-for="{post,index} in posts"
+    <ul class="threadList">
+      <li v-for="(post,index) in posts"
           :key="index">
 
+        <p class="title"
+           :style="post.isBold">{{post.subject}}</p>
+
+        <div class="userInfo">
+
+          <div class="avatar__name">
+            <image class="userAvatar"
+                   :src="post.avatarUrl"></image>
+            <p>{{post.username}}</p>
+          </div>
+
+          <p>{{post.dateline}}</p>
+
+        </div>
+
       </li>
+
     </ul>
 
   </div>
@@ -52,7 +68,8 @@ import forumApi from '@/api/forumApi'
 
 import { uniLoadMore, uniPopup } from '@dcloudio/uni-ui'
 
-import formatQuoteMsg from '../../tools/formatQuoteMsg'
+import formatQuoteMsg from '@/tools/formatQuoteMsg'
+import getAvatarUrl from '@/tools/getAvatarUrl'
 
 export default {
   name: 'forum',
@@ -77,16 +94,27 @@ export default {
   },
   methods: {
 
-    // 格式化帖子数据，为了标红标题
-    formatThreadTitle (res) {
-      const regSubject = /(?<=class='datatitle'\s>)[\S\s]*(?=<\/span>)/
-      for (let i of res.data) {
-        if (regSubject.test(i.subject)) {
-          i.subject = regSubject.exec(i.subject)[0]
-          i.dataTitle = true
+    // 格式化帖子数据，这里需要设置头像url进行二次循环，因为性能问题,不使用rich-text
+    formatThreadTitle (data) {
+
+      // 使用(?<=y)x这种后行断言编译会出问题
+      const regSubject = /[\s"]>+?[\S\s]*(?=<\/span>)/
+      const regBold = /font-weight:\sbold;color:\s#[A-Za-z0-9]{6}/
+
+      for (let i of data) {
+        // 先设置属性
+        if (regBold.test(i.subject)) {
+          i.isBold = regBold.exec(i.subject)[0]
+          console.log(i.isBold);
         }
+        // 后格式化标题
+        if (regSubject.test(i.subject)) {
+          i.subject = regSubject.exec(i.subject)[0].substring(2)
+        }
+        // 设置头像
+        i.avatarUrl = getAvatarUrl('avatar', i.uid, 'small')
       }
-      return res
+      return data
     },
     // 获取版面信息
     forumConfig () {
@@ -100,7 +128,7 @@ export default {
     forumPosts () {
       forumApi.forumPosts(this.fid)
         .then(res => {
-          this.posts = formatThreadTitle(res)
+          this.posts = this.formatThreadTitle(res.data)
         })
     }
   },
@@ -194,6 +222,30 @@ header {
     background: $uni-bg-color;
     border-radius: 12rpx;
     margin-right: 20rpx;
+  }
+}
+
+.threadList {
+  li {
+    @include main-layout;
+
+    .title {
+      font-size: 32rpx;
+    }
+
+    .userInfo {
+      @include thinBorder((top), $uni-bg-color-grey);
+      @include userInfo;
+      display: flex;
+      justify-content: space-between;
+      .avatar__name {
+        display: flex;
+        align-items: center;
+        .userAvatar {
+          @include avatar;
+        }
+      }
+    }
   }
 }
 </style>

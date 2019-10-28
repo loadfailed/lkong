@@ -41,6 +41,7 @@
         <editor id="editor"
                 class="ql-container"
                 placeholder="开始输入..."
+                v-model="text"
                 showImgSize
                 showImgToolbar
                 showImgResize
@@ -59,7 +60,8 @@
 export default {
   data () {
     return {
-      formats: {}
+      formats: {},
+      text: ''
     }
   },
   methods: {
@@ -138,13 +140,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 @import "./editor-icon.css";
-.wrapper {
-}
 .iconfont {
   display: inline-block;
-  padding: 20rpx 12rpx;
+  padding: 20rpx 40rpx 30rpx;
   width: 48rpx;
   height: 48rpx;
   cursor: pointer;
@@ -152,11 +152,9 @@ export default {
 }
 .toolbar {
   box-sizing: border-box;
+  width: 100%;
   border-bottom: 0;
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20rpx;
   border-radius: 12rpx 12rpx 0 0;
   background: #fff;
 }

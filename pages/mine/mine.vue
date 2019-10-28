@@ -68,7 +68,9 @@
                           :isMine="true" />
         </li>
       </ul>
-      <uniLoadMore />
+
+      <loading-animator />
+
     </div>
 
     <div>
@@ -135,17 +137,18 @@ export default {
       this.user[i] = user[i]
     }
     this.user.avatarUrl = getAvatarUrl('avatar', this.user.uid, 'middle')
-    this.getUserInfo()
-    this.getUserPosts(user.uid)
+    this.userInfo()
+    this.userPosts(user.uid)
   },
   // 上拉刷新
   onPullDownRefresh () {
-    this.getUserPosts()
+    this.userInfo()
+    this.userPosts()
     uni.stopPullDownRefresh()
   },
   // 下拉加载
   onReachBottom () {
-    this.getMorePosts()
+    this.morePosts()
   },
   computed: {
   },
@@ -158,8 +161,8 @@ export default {
       return posts.reverse()
     },
     // 获取用户信息
-    getUserInfo () {
-      mineApi.getUserInfo()
+    userInfo () {
+      mineApi.userInfo()
         .then(res => {
           for (let key in res) {
             this.user[key] = res[key]
@@ -177,9 +180,9 @@ export default {
     },
 
     // 获取所有发帖
-    getUserPosts (uid) {
+    userPosts (uid) {
       this.posts = []
-      mineApi.getUserPosts(uid)
+      mineApi.userPosts(uid)
         .then(res => {
           const posts = this.formatQuoteMsg(res.data)
           this.curtime = res.curtime
@@ -190,8 +193,8 @@ export default {
     },
 
     // 加载更多
-    getMorePosts () {
-      mineApi.getMorePosts(this.nexttime)
+    morePosts () {
+      mineApi.morePosts(this.nexttime)
         .then(res => {
           const posts = this.formatQuoteMsg(res.data)
           for (let post of posts) {
@@ -210,7 +213,7 @@ export default {
           icon: 'none'
         })
       } else {
-        mineApi.getPunch()
+        mineApi.punch()
           .then(res => {
             this.user.punchday = res.punchday
             this.user.isPunch = true

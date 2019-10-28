@@ -168,7 +168,8 @@ $uni-font-size-paragraph:30upx;
 
 @mixin avatar {
   border-radius: 50%;
-  background: $uni-color-primary;
+  // background: $uni-color-primary;
+  background: url('http://img.lkong.cn/avatar/noavatar_small.png') no-repeat center/cover;
   width: 48rpx;
   height: 48rpx;
   margin-right: 12rpx;

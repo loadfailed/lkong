@@ -1,28 +1,28 @@
 import request from '../tools/request'
 const indexApi = {
   // 请求信息流
-  getIndexPosts() {
+  indexPosts() {
     return request(`mod=data&sars=index/&_=${new Date().getTime()}`)
   },
   // 请求更多信息流
-  getMoreIndexPosts(nexttime) {
+  moreIndexPosts(nexttime) {
     return request(`mod=data&sars=index/&nexttime=${nexttime}&_=${new Date().getTime()}`)
   },
   // 请求@我
-  getAtMePosts() {
+  atMePosts() {
     return request(`mod=data&sars=my/atme&_=${new Date().getTime()}`)
   },
   // 请求更多@我
-  getMoreAtMePosts(nexttime) {
+  moreAtMePosts(nexttime) {
     return request(`mod=data&sars=my/atme&nexttime=${nexttime}&_=${new Date().getTime()}`)
   },
 
   // 请求主题
-  getThreadPosts() {
+  threadPosts() {
     return request(`mod=data&sars=index/thread&_=1${new Date().getTime()}`)
   },
   // 请求更多主题
-  getMoreThreadPosts(nexttime) {
+  moreThreadPosts(nexttime) {
     return request(`mod=data&sars=index/thread&nexttime=${nexttime}&_=${new Date().getTime()}`)
   },
   // 定时请求是否有新的信息流

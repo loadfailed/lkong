@@ -5,7 +5,6 @@
       "navigationBarTitleText": "",
       "enablePullDownRefresh": true
 
-
     }
   }, {
     "path": "pages/forumList/forumList",
@@ -31,15 +30,18 @@
     "style": {}
   }, {
     "path": "pages/forum/forum",
-    "style": {}
+    "style": {
+      "enablePullDownRefresh": true
+    }
   }],
 
   "globalStyle": {
-    "navigationBarTextStyle": "white",
+    "navigationBarTextStyle": "black",
     "navigationBarTitleText": "",
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationStyle": "custom",
     "backgroundColor": "#F8F8F8",
+
     "app-plus": {
       "softinputNavBar": "none"
     }

@@ -18,17 +18,16 @@
 
     <ul>
       <li v-for="(item,index) in posts"
-          :key="index"
-          @click="onFloorToReplies(item.pid,item.author)">
+          :key="index">
         <div class="header">
-          <div style="display:flex;">
+          <div style="display:flex;align-items:center">
 
-            <image class="user-avatar"
+            <image class="user__avatar"
                    :mode="aspectFit"
                    :src="`${item.avatarUrl}`">
             </image>
             <div>
-              <p style="color:$uni-text-color;">{{item.author}}</p>
+              <p style="color:#333;">{{item.author}}</p>
               <p style="font-size:26rpx;">{{item.dateline}}</p>
             </div>
           </div>
@@ -38,32 +37,37 @@
             <span>楼</span>
           </p>
         </div>
-        <div>
 
-          <rich-text :nodes="item.message.pstatus"
-                     style="color:#999;font-size:28rpx;font-style:italic;"></rich-text>
+        <div @click="onFloorToReplies(item.pid,item.author)">
+
+          <p style="color:#999;font-size:28rpx;font-style:italic;margin-bottom:12rpx;text-align:center">{{item.message.pstatus}}</p>
 
           <div class="quote"
                v-if="item.message.beQuoteUser">
-            <div class="header-line">
+            <div class="header__line">
               <div style="display:flex;align-items:center">
-                <span class="icon-font icon-user user-icon"></span>
-                <rich-text :nodes="item.message.beQuoteUser"></rich-text>
+                <span class="icon-font icon-user user__icon"></span>
+                <p>{{item.message.beQuoteUser}}</p>
               </div>
-              <rich-text :nodes="item.message.beQuoteDate"></rich-text>
+              <p>{{item.message.beQuoteDate}}</p>
             </div>
-            <rich-text :nodes="item.message.beQuoteMsg"></rich-text>
+            <rich-text :nodes="item.message.beQuoteMsg"
+                       style="font-size:30rpx"></rich-text>
           </div>
 
-          <rich-text :nodes="item.message.message"
-                     style="font-size:34rpx;letter-spacing: 2rpx;word-break: break-all;"></rich-text>
+          <div style="margin-top:20rpx;">
+            <rich-text :nodes="item.message.message"
+                       style="font-size:34rpx;letter-spacing: 2rpx;word-break: break-all;"></rich-text>
+          </div>
         </div>
+
       </li>
     </ul>
 
     <div style="margin:40rpx 0 40rpx;"
          v-if="config.replies>20">
       <uni-pagination :total="config.replies"
+                      :current="page"
                       :pageSize="20"
                       @change="changePage" />
     </div>
@@ -84,7 +88,8 @@ export default {
     return {
       tid: 0,
       config: {},
-      posts: []
+      posts: [],
+      page: 1
 
     }
   },
@@ -96,14 +101,19 @@ export default {
   onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
     console.log(option); //打印出上个页面传递的参数。
     this.tid = option.tid
-    this.getThreadConfig()
-    this.getThread()
+    this.threadConfig()
+    this.threads()
+  },
+
+  // 下拉刷新
+  onPullDownRefresh () {
+    this.threadConfig()
+    this.changePage()
+    uni.stopPullDownRefresh()
   },
 
   methods: {
-    test () {
-      console.log('done');
-    },
+    // 回复楼层
     onMineButtonToReplies () {
       let str = ''
       this.config.subject.length > 19 ? str = this.config.subject.substring(0, 18) + '…' : str = this.config.subject
@@ -111,23 +121,24 @@ export default {
         url: `/pages/writeReplies/writeReplies?tid=${this.config.tid}&myrequestid=thread_${this.config.tid}&title=${str}`
       })
     },
+    // 回复主题
     onFloorToReplies (pid, author) {
       uni.navigateTo({
         url: `/pages/writeReplies/writeReplies?tid=${this.config.tid}&myrequestid=post${pid}&replyid=${pid}&title=你正在回复 ${author}`
       })
     },
     // 获取帖子信息
-    getThreadConfig () {
-      threadApi.getThreadConfig(this.tid)
+    threadConfig () {
+      threadApi.threadConfig(this.tid)
         .then(res => {
           for (let i in res) {
             this.$set(this.config, i, res[i])
           }
         })
     },
-    // 获取回帖列表
-    getThread () {
-      threadApi.getThread(this.tid)
+    // 获取第一页的回帖列表，可以不用这个函数，用翻页中页面数传个1即可
+    threads () {
+      threadApi.threads(this.tid)
         .then(res => {
           res.data.forEach(item => {
             item.message = formatMessage(item.message)
@@ -138,7 +149,8 @@ export default {
     },
     // 翻页
     changePage (obj) {
-      threadApi.changePage(this.config.tid, obj.current)
+      if (obj) this.page = obj.current
+      threadApi.changePage(this.config.tid, this.page)
         .then(res => {
           res.data.forEach(item => {
             item.message = formatMessage(item.message)
@@ -154,11 +166,10 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  background: #fff;
+  color: $uni-text-color;
+  @include main-layout;
   h1 {
     font-size: 38rpx;
-    padding: 40rpx 20rpx 20rpx;
-    color: $uni-text-color;
   }
   .digest {
     color: #999;
@@ -169,24 +180,19 @@ export default {
   }
 }
 li {
-  margin: 30rpx 0;
-  padding: 40rpx 20rpx;
-  background: #fff;
-  border-radius: 12rpx;
-
+  @include main-layout;
   .header {
-    padding: 12rpx 0 30rpx;
-    border-bottom: 1rpx solid $uni-bg-color-grey;
+    padding-bottom: 20rpx;
+    @include thinBorder("bottom", $uni-bg-color-grey);
     margin-bottom: 20rpx;
     display: flex;
     color: #999;
     justify-content: space-between;
-    .user-avatar {
-      width: 80rpx;
-      height: 80rpx;
-      border-radius: 50%;
-      margin-right: 12rpx;
-      background: $uni-color-primary;
+    align-items: center;
+    .user__avatar {
+      @include avatar;
+      width: 60rpx;
+      height: 60rpx;
     }
   }
 
@@ -196,12 +202,14 @@ li {
     border-radius: 12rpx;
     color: #666;
     font-size: 28rpx;
-    .header-line {
+    .header__line {
       display: flex;
       justify-content: space-between;
       color: $uni-text-color-grey;
-      padding: 12rpx;
-      .user-icon {
+      padding-bottom: 12rpx;
+      margin-bottom: 12rpx;
+      @include thinBorder((bottom), #cbe7f0);
+      .user__icon {
         font-family: "iconfont";
         padding: 0 6rpx;
       }

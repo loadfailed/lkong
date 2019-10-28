@@ -1,11 +1,11 @@
 import request from '../tools/request'
 const threadApi = {
   // 获取帖子信息
-  getThreadConfig(tid) {
+  threadConfig(tid) {
     return request(`mod=ajax&action=threadconfig_${tid}&_=${new Date().getTime()}`)
   },
-  // 获取帖子详情
-  getThread(tid) {
+  // 获取帖子的回帖列表
+  threads(tid) {
     return request(`mod=data&sars=thread/${tid}&_=${new Date().getTime()}`)
   },
   // 回帖

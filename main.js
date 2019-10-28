@@ -3,6 +3,8 @@ import App from './App'
 import statusBar from './components/statusBar.vue'
 import mineButton from './components/mineButton'
 import newEditor from '@/components/newEditor'
+import loadingAnimator from '@/components/loadingAnimator'
+
 import store from './store/index'
 
 Vue.prototype.$store = store
@@ -12,6 +14,7 @@ Vue.config.productionTip = false
 Vue.component('statusBar', statusBar)
 Vue.component('mineButton', mineButton)
 Vue.component('newEditor', newEditor)
+Vue.component('loadingAnimator', loadingAnimator)
 
 
 

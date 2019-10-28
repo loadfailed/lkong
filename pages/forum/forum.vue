@@ -1,7 +1,6 @@
 <template>
   <div class="main">
     <status-bar />
-
     <header>
 
       <div class="content">
@@ -38,10 +37,14 @@
 
     <ul class="threadList">
       <li v-for="(post,index) in posts"
-          :key="index">
+          :key="index"
+          @click="navigateToThread(post.id)">
 
-        <p class="title"
-           :style="post.isBold">{{post.subject}}</p>
+        <p class="title">
+          <span class="reply__num">{{post.replynum}}</span>
+          <span :style="post.isBold"
+                class="thread__title">{{post.subject}}</span>
+        </p>
 
         <div class="userInfo">
 
@@ -59,6 +62,8 @@
 
     </ul>
 
+    <loading-animator />
+
   </div>
 </template>
 
@@ -66,7 +71,6 @@
 
 import forumApi from '@/api/forumApi'
 
-import { uniLoadMore, uniPopup } from '@dcloudio/uni-ui'
 
 import formatQuoteMsg from '@/tools/formatQuoteMsg'
 import getAvatarUrl from '@/tools/getAvatarUrl'
@@ -81,9 +85,13 @@ export default {
       config: {},
       posts: [],
       curtime: 0,
-      nexttime: 0
+      nexttime: 0,
+
+      lockReach: null
 
     }
+  },
+  components: {
   },
   onLoad (options) {
     this.fid = options.fid
@@ -91,6 +99,17 @@ export default {
     this.avatarUrl = JSON.parse(decodeURIComponent(options.avatarUrl))
     this.forumConfig()
     this.forumPosts()
+  },
+  // 下拉刷新
+  onPullDownRefresh () {
+    this.forumConfig()
+    this.forumPosts()
+    uni.stopPullDownRefresh()
+  },
+  computed: {
+    followForum () {
+      return '已关注'
+    }
   },
   methods: {
 
@@ -126,16 +145,43 @@ export default {
     },
     // 获取版面帖子列表
     forumPosts () {
+      this.posts = []
       forumApi.forumPosts(this.fid)
         .then(res => {
           this.posts = this.formatThreadTitle(res.data)
         })
-    }
-  },
-  computed: {
-    followForum () {
-      return '已关注'
-    }
+    },
+
+    // 跳转到帖子
+    navigateToThread (id) {
+      const tid = id.substring(7);
+      uni.navigateTo({
+        url: `/pages/thread/thread?tid=${tid}`
+      })
+    },
+
+    // 获取更多帖子
+    moreForumPosts () {
+      forumApi.moreForumPosts(this.fid, this.nexttime)
+        .then(res => {
+          const posts = this.formatThreadTitle(res.data)
+          this.posts = this.posts.concat(posts)
+          this.curtime = res.curtime
+          this.nexttime = res.nexttime
+        })
+    },
+
+    // 上拉加载
+    onReachBottom () {
+      // 防抖
+      if (!this.lockReach) {
+        clearTimeout(this.lockReach)
+        this.lockReach = setTimeout(() => {
+          this.moreForumPosts()
+          this.lockReach = null
+        }, 500)
+      }
+    },
   }
 }
 </script>
@@ -231,6 +277,19 @@ header {
 
     .title {
       font-size: 32rpx;
+      .reply__num {
+        font-size: 24rpx;
+        display: inline-block;
+        background: $uni-bg-color-grey;
+        padding: 8rpx 16rpx;
+        border-radius: 8rpx;
+        color: #999;
+        margin: -4rpx 12rpx 0 0;
+        vertical-align: middle;
+      }
+      .thread__title {
+        padding: 4rpx 0;
+      }
     }
 
     .userInfo {

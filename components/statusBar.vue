@@ -14,13 +14,13 @@ export default {
 .status_bar {
   height: var(--status-bar-height);
   width: 100%;
-  background-color: $uni-color-primary;
+  background-color: #fff;
 }
 .top_view {
   height: var(--status-bar-height);
   width: 100%;
   position: fixed;
-  background-color: $uni-color-primary;
+  background-color: #fff;
   top: 0;
   z-index: 999;
 }

@@ -39,6 +39,7 @@
 
 <script>
 
+import { mapMutations } from 'vuex'
 
 import indexApi from '../../api/indexApi'
 import commonApi from '../../api/commonApi'
@@ -71,6 +72,7 @@ export default {
   onLoad () {
     this.checkLogin('/pages/index/index', 2)
     this.indexPosts()
+    this.followList()
 
   },
   onShow () {
@@ -87,7 +89,6 @@ export default {
   onHide () {
     clearInterval(this.crnInterval)
     clearInterval(this.llInterval)
-    console.log(clearInterval);
   },
   // 下拉刷新
   onPullDownRefresh () {
@@ -118,6 +119,9 @@ export default {
   computed: {
   },
   methods: {
+    ...mapMutations([
+      'SET_FOLLOWLIST'
+    ]),
     // 格式化帖子
     formatQuoteMsg (list) {
       const posts = list.map(item => {
@@ -213,17 +217,10 @@ export default {
     },
 
     // 获取关注版面列表
-    getFollowForum () {
-      commonApi.followForum()
+    followList () {
+      commonApi.followList()
         .then(res => {
-          // 检查是否被关注
-          for (let i of this.forumlist) {
-            i.isFollow = res.fid.includes(i.fid + '')
-          }
-          for (let i of this.sysweimian) {
-            i.isFollow = res.fid.includes(i.fid + '')
-          }
-          uni.setStorageSync('fid', res.fid)
+          this.SET_FOLLOWLIST(res)
         })
     }
 
@@ -243,11 +240,11 @@ export default {
   top: 0;
   z-index: 998;
   font-size: 36rpx;
-  box-shadow: 0 0 4rpx 4rpx rgba($uni-text-color, 0.5);
+  box-shadow: 0 0 4rpx 4rpx rgba($uni-text-color, 0.2);
   p {
     padding: 20rpx;
     text-align: center;
-    color: rgba($uni-color-primary, 0.7);
+    color: #999;
     font-size: 32rpx;
     position: relative;
     .notice::after {
@@ -259,9 +256,10 @@ export default {
     }
   }
   .activeTab {
-    color: $uni-color-primary;
+    color: $uni-text-color-grey;
     font-weight: bold;
     margin-top: 8rpx;
+    color: $uni-color-primary;
     border-bottom: 8rpx solid #fff;
   }
 }

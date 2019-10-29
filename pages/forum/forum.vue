@@ -11,7 +11,7 @@
 
           <div class="name">
             <p>{{name}}</p>
-            <p class="followForum">{{followForum}}</p>
+            <p class="followList">{{followList}}</p>
           </div>
 
           <p class="num">
@@ -71,7 +71,6 @@
 
 import forumApi from '@/api/forumApi'
 
-
 import formatQuoteMsg from '@/tools/formatQuoteMsg'
 import getAvatarUrl from '@/tools/getAvatarUrl'
 
@@ -107,7 +106,7 @@ export default {
     uni.stopPullDownRefresh()
   },
   computed: {
-    followForum () {
+    followList () {
       return '已关注'
     }
   },
@@ -213,7 +212,7 @@ header {
         flex-direction: row;
         justify-content: space-between;
 
-        .followForum {
+        .followList {
           padding: 12rpx 20rpx;
           margin: -12rpx -12% 0 0;
           font-size: 28rpx;

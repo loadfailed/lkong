@@ -10,7 +10,7 @@ const store = new Vuex.Store({
 
   mutations: {
 
-    SET_FOLLOWFID(state, followlist) {
+    SET_FOLLOWLIST(state, followlist) {
       console.log('vuex', state.followlist)
       state.followlist = followlist
     }

@@ -7,7 +7,7 @@
       <span>”</span>
     </header>
     <new-editor @input="onInput" />
-    <mine-button @click="commitReplies">发表</mine-button>
+    <mine-button @click="commitReply">发表</mine-button>
   </div>
 </template>
 
@@ -38,17 +38,17 @@ export default {
     onInput (val) {
       this.data.content = val
     },
-    commitReplies () {
+    commitReply () {
       threadApi.sendPost(this.data)
         .then(res => {
           if (res.success) {
             uni.showToast({
               icon: 'none',
-              title: '成功',
+              title: '发表成功',
             })
             setTimeout(() => {
               uni.navigateBack()
-            }, 1000);
+            }, 750);
           }
         })
     }

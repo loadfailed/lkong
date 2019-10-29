@@ -53,15 +53,14 @@ export default {
   },
   onLoad () {
     this.checkLogin('/pages/forum/forum', 2)
-    this.getforumList()
-    this.getFollowForum()
+    this.forumList()
   },
   methods: {
     ...mapMutations([
-      'SET_FOLLOWFID'
+      'SET_FOLLOWLIST'
     ]),
     // 获取版面列表
-    getforumList () {
+    forumList () {
       forumApi.forumList()
         .then(res => {
 
@@ -78,12 +77,12 @@ export default {
           }
           this.forumlist = res.forumlist
           this.sysweimian = res.sysweimian
-          this.getFollowForum()
+          this.followList()
         })
     },
     // 获取关注列表
-    getFollowForum () {
-      commonApi.followForum()
+    followList () {
+      commonApi.followList()
         .then(res => {
           // 检查是否被关注
           for (let i of this.forumlist) {
@@ -92,7 +91,7 @@ export default {
           for (let i of this.sysweimian) {
             i.isFollow = res.fid.includes(i.fid + '')
           }
-          this.SET_FOLLOWFID(res)
+          this.SET_FOLLOWLIST(res)
         })
     },
     // 路由跳转

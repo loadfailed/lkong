@@ -35,6 +35,7 @@ function formatMessage(message) {
   // 回帖
   // 由于富文本编辑器的匹配复杂度，所以使用删减原文的方法
   const regQuote = /<blockquote[\S\s]*<\/blockquote>/
+  // const regBr = /^(?:<br)[\s>]{1,2}/
   post.message = message.replace(regPstatus, '').replace(regQuote, '')
 
   return post

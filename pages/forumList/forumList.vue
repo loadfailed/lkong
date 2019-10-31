@@ -77,11 +77,11 @@ export default {
           }
           this.forumlist = res.forumlist
           this.sysweimian = res.sysweimian
-          this.followList()
+          this.getFollowList()
         })
     },
     // 获取关注列表
-    followList () {
+    getFollowList () {
       commonApi.followList()
         .then(res => {
           // 检查是否被关注

@@ -16,8 +16,9 @@ export default {
 
 <style lang='scss' scoped>
 .loading {
-  margin: 40rpx 0;
   display: flex;
+  box-sizing: content-box;
+  padding: 40rpx 0;
   justify-content: center;
   .box {
     width: 12rpx;

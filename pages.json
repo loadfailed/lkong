@@ -37,7 +37,6 @@
 
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "",
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationStyle": "custom",
     "backgroundColor": "#F8F8F8",

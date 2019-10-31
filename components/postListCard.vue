@@ -180,8 +180,4 @@ export default {
     }
   }
 }
-
-.context {
-  word-break: break-all;
-}
 </style>

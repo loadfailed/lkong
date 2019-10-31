@@ -4,7 +4,11 @@
                  class="scroll"
                  scroll-with-animation="true"
                  :scroll-top="scrollTop"
-                 @scroll="test">
+                 show-scrollbar="false"
+                 @scrolltoupper="test"
+                 @scroll="onScroll">
+
+      <status-bar />
 
       <div class="title"
            v-show="page===1">
@@ -64,7 +68,7 @@
 
             <div style="margin-top:20rpx;">
               <rich-text :nodes="item.message.message"
-                         style="font-size:34rpx;letter-spacing: 2rpx;word-break: break-all;"></rich-text>
+                         style="font-size:34rpx;letter-spacing: 2rpx;"></rich-text>
             </div>
           </div>
 
@@ -126,7 +130,10 @@ export default {
   },
 
   methods: {
-    test (e) {
+    test () {
+      console.log('done');
+    },
+    onScroll (e) {
       this.oldScrollTop = e.detail.scrollTop
     },
     // 回复楼层
@@ -191,16 +198,17 @@ export default {
 
 <style lang="scss" scoped>
 .scroll {
-  padding-top: var(--status-bar-height);
   height: 100vh;
 }
 
 .title {
   color: $uni-text-color;
-  @include main-layout;
-  background: $uni-bg-color;
+  box-shadow: 0 0 2rpx 4rpx rgba($uni-text-color, 0.1);
+  padding: 0 20rpx 20rpx;
+  background: #fff;
   h1 {
     font-size: 38rpx;
+    padding-top: 20rpx;
   }
   .digest {
     color: #999;

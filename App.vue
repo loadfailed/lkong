@@ -24,5 +24,8 @@ page {
 }
 :not(not) {
   box-sizing: border-box;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
 }
 </style>

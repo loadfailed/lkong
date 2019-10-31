@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-    <status-bar />
     <header>
 
       <div class="content">
@@ -273,7 +272,6 @@ header {
 .threadList {
   li {
     @include main-layout;
-
     .title {
       font-size: 32rpx;
       .reply__num {

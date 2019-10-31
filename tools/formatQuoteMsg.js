@@ -4,6 +4,7 @@ function formatQuoteMsg(item) {
   const regImgUrl = /<img/gi
   if (regImgUrl.test(item.message)) {
     item.message = item.message.replace(regImgUrl, '<img style="max-width:100%"')
+
   }
   // 提取回帖
   if (item.isquote) {
@@ -21,8 +22,10 @@ function formatQuoteMsg(item) {
     const regMessage = /<\/div><\/div><\/div>[\S\s]*/
     item.message = regMessage.exec(item.message)[0]
     item.message = setStr(item.message, 18, 0)
-    return item
-  } else return item
+    console.log(item.message);
+  }
+  item.message = '<div style="word-wrap: break-word;overflow:hidden;white-space: pre-wrap;width:100%">' + item.message + '</div>'
+  return item
 }
 
 // 去除正则匹配多余字符

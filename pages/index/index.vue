@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <scroll-view class="content">
     <div class="nav-bar">
       <p :class="{activeTab:'信息流'===activeTab}"
          @click="indexPosts">
@@ -34,7 +34,7 @@
     </ul>
 
     <loading-animator />
-  </div>
+  </scroll-view>
 </template>
 
 <script>

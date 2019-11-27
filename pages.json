@@ -49,16 +49,24 @@
 
   "tabBar": {
     "color": "#707070",
-    "selectedColor": "#DE533A",
+    "selectedColor": "#0099CC",
+	"fontSize":12,
+	"iconWidth":18,
     "list": [{
       "pagePath": "pages/index/index",
-      "text": "信息流"
+      "text": "信息流",
+	   "iconPath": "static/images/home.png",
+	   "selectedIconPath":"static/images/home_selected.png"
     }, {
       "pagePath": "pages/forumList/forumList",
-      "text": "版块"
+      "text": "版块",
+	   "iconPath": "static/images/forums.png",
+	   "selectedIconPath":"static/images/forums_selected.png"
     }, {
       "pagePath": "pages/mine/mine",
-      "text": "我的"
+      "text": "我的",
+	   "iconPath": "static/images/mine.png",
+	   "selectedIconPath":"static/images/mine_seletced.png"
     }]
   }
 }

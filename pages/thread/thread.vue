@@ -2,10 +2,8 @@
   <div>
     <scroll-view scroll-y="true"
                  class="scroll"
-                 scroll-with-animation="true"
                  :scroll-top="scrollTop"
                  show-scrollbar="false"
-                 @scrolltoupper="test"
                  @scroll="onScroll">
 
       <status-bar />
@@ -130,9 +128,6 @@ export default {
   },
 
   methods: {
-    test () {
-      console.log('done');
-    },
     onScroll (e) {
       this.oldScrollTop = e.detail.scrollTop
     },

@@ -47,7 +47,7 @@ function request(url, data, method = 'GET') {
         ...params.data
       },
       success: res => {
-        console.log(res.data);
+        // console.log(res.data);
         resolve(res.data)
       },
       fail: err => {

@@ -1,13 +1,13 @@
 <script>
 export default {
   onLaunch: function () {
-    console.log('App Launch')
+    // console.log('App Launch')
   },
   onShow: function () {
-    console.log('App Show')
+    // console.log('App Show')
   },
   onHide: function () {
-    console.log('App Hide')
+    // console.log('App Hide')
   }
 }
 </script>
@@ -26,6 +26,6 @@ page {
   box-sizing: border-box;
   word-wrap: break-word;
   word-break: break-all;
-  white-space: pre-wrap;
+  // white-space: pre-wrap;
 }
 </style>

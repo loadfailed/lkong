@@ -122,7 +122,6 @@ export default {
         // 先设置属性
         if (regBold.test(i.subject)) {
           i.isBold = regBold.exec(i.subject)[0]
-          console.log(i.isBold);
         }
         // 后格式化标题
         if (regSubject.test(i.subject)) {

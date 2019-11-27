@@ -11,7 +11,7 @@ const store = new Vuex.Store({
   mutations: {
 
     SET_FOLLOWLIST(state, followlist) {
-      console.log('vuex', state.followlist)
+      // console.log('vuex', state.followlist)
       state.followlist = followlist
     }
   }

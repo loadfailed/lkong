@@ -95,14 +95,14 @@ export default {
     insertDivider () {
       this.editorCtx.insertDivider({
         success: function () {
-          console.log('insert divider success')
+          // console.log('insert divider success')
         }
       })
     },
     clear () {
       this.editorCtx.clear({
         success: function (res) {
-          console.log("clear success")
+          // console.log("clear success")
         }
       })
     },
@@ -115,7 +115,7 @@ export default {
             src: res.tempFilePaths[0],
             alt: '图像',
             success: function () {
-              console.log('insert image success')
+              // console.log('insert image success')
             }
           })
         }

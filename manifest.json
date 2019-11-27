@@ -1,14 +1,15 @@
 {
-    "name" : "reader",
+    "name" : "龙的天空",
     "appid" : "__UNI__D0E9141",
     "description" : "",
     "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionCode" : 1,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
         "usingComponents" : true,
-        "nvueCompiler" : "龙的天空",
+        "nvueCompiler" : "uni-app",
+        // "renderer":"native",
         "splashscreen" : {
             "alwaysShowBeforeRender" : true,
             "waiting" : true,
@@ -46,7 +47,8 @@
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-                ]
+                ],
+                "abiFilters" : []
             },
             /* ios打包配置 */
             "ios" : {},

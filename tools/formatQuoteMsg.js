@@ -22,7 +22,7 @@ function formatQuoteMsg(item) {
     const regMessage = /<\/div><\/div><\/div>[\S\s]*/
     item.message = regMessage.exec(item.message)[0]
     item.message = setStr(item.message, 18, 0)
-    console.log(item.message);
+    // console.log(item.message);
   }
   item.message = '<div style="word-wrap: break-word;overflow:hidden;white-space: pre-wrap;width:100%">' + item.message + '</div>'
   return item
